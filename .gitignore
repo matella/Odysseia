@@ -1,0 +1,20 @@
+# Rust (core/)
+target/
+**/*.rs.bk
+
+# Flutter / Dart (app/)
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+*.iml
+.idea/
+
+# Outils / OS
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Données personnelles — ne JAMAIS commiter d'export Timeline réel (§3.10)
+*.timeline.json
+Timeline.json

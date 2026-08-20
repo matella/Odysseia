@@ -1,0 +1,101 @@
+# CI légère (§3.9) : vérifier que ça compile et que les tests passent.
+#
+# Pas de pipeline de release, pas de signature, pas de publication — les
+# binaires desktop/iOS sont compilés localement à la demande (§4).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Épinglé : les golden tests (§3.10) sont sensibles à la version de Flutter.
+  FLUTTER_VERSION: 3.41.3
+
+jobs:
+  core:
+    name: core — cargo test + clippy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: core
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+          # Le web passe par un build WASM distinct du natif (§6.2) :
+          # on vérifie la cible dès maintenant plutôt que trop tard.
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+
+      - run: cargo test --all-features
+
+      - run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Vérification cible WASM (§6.2)
+        run: cargo check --target wasm32-unknown-unknown
+
+  app:
+    name: app — flutter analyze + test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - run: flutter analyze
+
+      # Unitaires + golden (§3.10). Linux est la référence pour les goldens :
+      # le rendu des polices diffère d'une plateforme à l'autre.
+      - run: flutter test
+
+  build:
+    name: build de vérification — Android + web
+    runs-on: ubuntu-latest
+    needs: app
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # APK de debug : signé avec la clé de debug locale, jamais publié (§4).
+      - name: Build Android (debug)
+        run: flutter build apk --debug
+
+      - name: Build web
+        run: flutter build web
