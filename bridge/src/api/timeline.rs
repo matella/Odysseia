@@ -407,10 +407,14 @@ fn to_core_zone(input: &PrivateZoneInput) -> CorePrivateZone {
             radius_m,
         },
         _ => ZoneShape::Polygon {
+            // `as_chunks` plutôt que `chunks_exact(2)` : la taille est
+            // constante, le compilateur en tire un tableau de taille connue.
             vertices: input
                 .polygon
-                .chunks_exact(2)
-                .map(|pair| (pair[0], pair[1]))
+                .as_chunks::<2>()
+                .0
+                .iter()
+                .map(|[lat, lon]| (*lat, *lon))
                 .collect(),
         },
     };
