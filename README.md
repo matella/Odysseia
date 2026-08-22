@@ -15,14 +15,14 @@ localement sur l'appareil — aucune donnée Timeline n'est envoyée à un serve
 | Arborescence §6 + CI légère | fait |
 | Parsing streaming + fixtures (§3.10) | fait |
 | Schéma §5 en base + pipeline §5.4 | fait (bridge non branché) |
-| Vues Récit / Stats / Vidéo | à faire |
+| Vues Récit / Stats / Vidéo | rendu fait, encodage MP4 à faire |
 
 ## Structure
 
 | Dossier | Rôle |
 | --- | --- |
 | `core/` | crate Rust `timeline_core` — parsing, pipeline, stats, rendu |
-| `bridge/` | configuration et fichiers générés `flutter_rust_bridge` |
+| `bridge/` | crate `odysseia_bridge` — pont vers Dart, seule frontière |
 | `app/` | application Flutter (Android, iOS, web, desktop) |
 | `assets/geo_place/` | base GeoNames filtrée, embarquée (§5.3) |
 | `docs/` | [specs.md](docs/specs.md), [privacy.md](docs/privacy.md), [data-model.md](docs/data-model.md) |

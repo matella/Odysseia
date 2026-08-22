@@ -63,7 +63,18 @@ Rust. Duplicated logic between the two sides is the failure mode this rule
 exists to prevent.
 
 Generated `flutter_rust_bridge` files are committed but **never hand-edited**
-(§6.1) — regenerate instead.
+(§6.1) — regenerate instead:
+
+```bash
+cd app && flutter_rust_bridge_codegen generate && cd ../bridge && cargo build
+```
+
+Both halves matter. Regenerating the Dart without rebuilding the native
+library leaves the two sides speaking different protocols, and the failure
+surfaces as an opaque codec assertion, not as a type error.
+
+The frb-annotated API lives in `bridge/`, never in `core/` — that is what
+keeps the core free of Dart concerns.
 
 ### 4. All data access goes through the pipeline (§5.4)
 

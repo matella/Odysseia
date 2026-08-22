@@ -94,12 +94,19 @@ Décisions prises en implémentant :
   filtré « villes ≥ 1000 habitants » : en zone peu dense, mieux vaut afficher
   les coordonnées qu'affirmer une ville où l'utilisateur n'est jamais allé.
 
+## Accès depuis Dart
+
+Le pipeline est appelable depuis Dart via `bridge/` : `TimelineRepository`
+est le seul chemin, et l'API du pont n'offre aucune fonction renvoyant de la
+donnée non filtrée. Vérifié par `app/test/bridge/pipeline_bridge_test.dart`,
+qui fait passer une zone privée à travers le pont et constate l'absence.
+
 ## Reste à faire
 
-- **Le pipeline n'est pas encore appelable depuis Dart** : `flutter_rust_bridge`
-  n'est pas configuré (§6.2). Aucune vue n'existe encore, donc rien ne
-  contourne le pipeline aujourd'hui — mais c'est l'étape à faire avant la
-  première vue, sans quoi la tentation de recalculer en Dart sera forte.
+- **L'encodage MP4 n'est pas branché** (§3.5) : `core/src/render/` produit un
+  plan de frames déterministe, mais ni ffmpeg natif ni `ffmpeg.wasm` ne sont
+  intégrés.
+- **Le build web du pont** reste à faire (`build-web`, §6.2).
 - `geo_place` est déclarée mais vide : le peuplement depuis
   `assets/geo_place/` dépend de la décision §6.2 (dataset versionné ou généré).
 - Migrations : `schemaVersion = 1`, aucune migration à écrire tant que rien

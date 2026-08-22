@@ -26,3 +26,14 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+analyzer:
+  exclude:
+    # Outil de build cargokit, vendu tel quel avec le plugin du pont : code
+    # tiers, non édité par nous, et non analysable en l'état (§6.1 — les
+    # fichiers générés ou vendus ne sont pas retouchés à la main).
+    - rust_builder/cargokit/**
+    # Fichiers générés (drift, l10n, flutter_rust_bridge).
+    - lib/**/*.g.dart
+    - lib/l10n/generated/**
+    - lib/bridge/generated/**

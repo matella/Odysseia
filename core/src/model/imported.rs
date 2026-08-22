@@ -38,7 +38,9 @@ pub enum SourceFormat {
 /// `detected_mode` conserve **toujours** la valeur d'origine : une correction
 /// utilisateur vit dans `user_segment_override` (§5.2) et est appliquée par le
 /// pipeline (§5.4), elle n'écrase jamais cette valeur.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+// `Ord` : les statistiques (§3.4) indexent des histogrammes par mode et
+// doivent produire un ordre déterministe — l'ordre de déclaration ci-dessous.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 #[non_exhaustive]
 pub enum TravelMode {
     /// À pied.

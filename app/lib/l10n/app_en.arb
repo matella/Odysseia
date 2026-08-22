@@ -1,0 +1,155 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Odysseia",
+  "@appTitle": { "description": "Application name (§3.9)" },
+
+  "navStory": "Story",
+  "@navStory": { "description": "Story view tab (§3.3)" },
+  "navStats": "Stats",
+  "@navStats": { "description": "Stats view tab (§3.4)" },
+  "navVideo": "Video",
+  "@navVideo": { "description": "Memory video tab (§3.5)" },
+
+  "granularityDay": "Day",
+  "granularityWeek": "Week",
+  "granularityMonth": "Month",
+  "granularityYear": "Year",
+  "@granularityDay": { "description": "Story navigation granularity (§3.3)" },
+
+  "storyEmpty": "Nothing recorded for this period",
+  "@storyEmpty": { "description": "Story view with no data (§3.3)" },
+  "storyEmptyHint": "Try another period, or import a Timeline export.",
+  "storyVisitAt": "Stay at {place}",
+  "@storyVisitAt": {
+    "description": "A visit entry in the story (§3.3)",
+    "placeholders": { "place": { "type": "String" } }
+  },
+  "storyUnnamedPlace": "Unnamed place",
+  "@storyUnnamedPlace": {
+    "description": "Fallback when the pipeline resolves to raw coordinates (§5.4)"
+  },
+  "storyTripFromTo": "{from} → {to}",
+  "@storyTripFromTo": {
+    "description": "A trip entry in the story (§3.3)",
+    "placeholders": {
+      "from": { "type": "String" },
+      "to": { "type": "String" }
+    }
+  },
+  "storyCorrectedBadge": "corrected",
+  "@storyCorrectedBadge": {
+    "description": "Marks a trip whose mode the user corrected (§5.2)"
+  },
+  "storyWeatherUnavailable": "Weather off",
+  "@storyWeatherUnavailable": {
+    "description": "Weather integration disabled by default (§3.3, §2)"
+  },
+  "storyPhotosUnavailable": "Photos off",
+  "@storyPhotosUnavailable": {
+    "description": "Photo correlation not enabled (§3.1)"
+  },
+
+  "modeWalking": "Walking",
+  "modeRunning": "Running",
+  "modeCycling": "Cycling",
+  "modeInVehicle": "By car",
+  "modeInBus": "By bus",
+  "modeInTrain": "By train",
+  "modeBoat": "By boat",
+  "modeMotorcycling": "By motorbike",
+  "modeFlight": "By plane",
+  "modeUnknown": "Unknown",
+  "@modeWalking": { "description": "Travel mode label (§5.1)" },
+
+  "weekdayMonday": "Mon",
+  "weekdayTuesday": "Tue",
+  "weekdayWednesday": "Wed",
+  "weekdayThursday": "Thu",
+  "weekdayFriday": "Fri",
+  "weekdaySaturday": "Sat",
+  "weekdaySunday": "Sun",
+  "@weekdayMonday": { "description": "Short weekday for the stats view (§3.4)" },
+
+  "statsTitle": "Stats & patterns",
+  "statsDensity": "Density heatmap",
+  "statsTopPlaces": "Most visited places",
+  "statsTimePerPlace": "Time spent per place",
+  "statsHourly": "Hourly patterns",
+  "statsWeekday": "Day-of-week patterns",
+  "statsTotalDistance": "Total distance",
+  "statsModeBreakdown": "By travel mode",
+  "@statsDensity": { "description": "One of the six §3.4 statistics" },
+
+  "statsEmpty": "No data for these filters",
+  "statsVisitCount": "{count, plural, =0{No stays} =1{1 stay} other{{count} stays}}",
+  "@statsVisitCount": {
+    "description": "Number of stays after pipeline filtering (§5.4)",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "statsSegmentCount": "{count, plural, =0{No trips} =1{1 trip} other{{count} trips}}",
+  "@statsSegmentCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "filtersTitle": "Filters",
+  "filtersPeriod": "Period",
+  "filtersPlace": "Place",
+  "filtersMode": "Travel mode",
+  "filtersAll": "All",
+  "filtersClear": "Clear filters",
+  "@filtersTitle": { "description": "Combinable filters (§3.4)" },
+
+  "videoTitle": "Memory video",
+  "videoDuration": "Duration",
+  "videoDurationSeconds": "{seconds}s",
+  "@videoDurationSeconds": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "videoPeriod": "Period",
+  "videoStyle": "Visual style",
+  "videoStyleClassic": "Classic",
+  "videoStyleNight": "Night",
+  "videoStyleMinimal": "Minimal",
+  "videoTitleTemplate": "Title",
+  "videoTitleTemplateHint": "My year in {year}",
+  "@videoTitleTemplateHint": {
+    "description": "Placeholder text shown in the title field (§3.5)",
+    "placeholders": { "year": { "type": "String" } }
+  },
+  "videoRender": "Generate video",
+  "videoPreview": "Preview",
+  "videoFrameCount": "{count} frames",
+  "@videoFrameCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "videoWebSlowWarning": "Rendering in the browser is much slower than on device. You can keep using the app while it runs.",
+  "@videoWebSlowWarning": { "description": "Required web warning (§3.5)" },
+  "videoEncoderUnavailable": "Video export is not wired up yet — preview only.",
+  "@videoEncoderUnavailable": {
+    "description": "Honest state while the MP4 encoder is not integrated (§3.5)"
+  },
+
+  "progressStep": "Step {step}",
+  "@progressStep": {
+    "placeholders": { "step": { "type": "String" } }
+  },
+  "progressPercent": "{percent}%",
+  "@progressPercent": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+
+  "errorEmptyExport": "This export contains no data.",
+  "errorCorruptJson": "This file is not valid JSON and could not be read.",
+  "errorUnrecognisedFormat": "This export format is not recognised. It may come from a newer version of Google Timeline.",
+  "errorFileTooLarge": "This file is too large to be processed on this device.",
+  "errorIo": "The file could not be read.",
+  "@errorEmptyExport": {
+    "description": "One message per error case (§3.10) — never a generic catch-all"
+  },
+
+  "privateZoneHidden": "Some data is hidden by your private zones",
+  "@privateZoneHidden": {
+    "description": "Shown when private zones are active (§3.7)"
+  }
+}

@@ -47,14 +47,50 @@ jobs:
       - name: Vérification cible WASM (§6.2)
         run: cargo check --target wasm32-unknown-unknown
 
-  app:
-    name: app — flutter analyze + test
+  bridge:
+    name: bridge — build + clippy
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: app
+        working-directory: bridge
     steps:
       - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: bridge
+
+      - run: cargo build
+
+      - run: cargo clippy --all-targets -- -D warnings
+
+      # Le pont doit tenir sur WASM aussi, sinon la cible web est morte (§6.2).
+      - name: Vérification cible WASM (§6.2)
+        run: cargo check --target wasm32-unknown-unknown
+
+  app:
+    name: app — flutter analyze + test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: bridge
+
+      # Les tests du pont chargent la bibliothèque native depuis
+      # `bridge/target/debug` — sans elle, ils échouent au lieu d'être
+      # silencieusement sautés (voir `test/bridge/rust_lib.dart`).
+      - name: Construire la bibliothèque native
+        working-directory: bridge
+        run: cargo build
 
       - uses: subosito/flutter-action@v2
         with:
@@ -62,21 +98,24 @@ jobs:
           channel: stable
           cache: true
 
-      - run: flutter pub get
+      - name: flutter pub get
+        working-directory: app
+        run: flutter pub get
 
-      - run: flutter analyze
+      - name: flutter analyze
+        working-directory: app
+        run: flutter analyze
 
-      # Unitaires + golden (§3.10). Linux est la référence pour les goldens :
-      # le rendu des polices diffère d'une plateforme à l'autre.
-      - run: flutter test
+      # Unitaires + golden (§3.10). Les images de référence sont comparées
+      # avec une tolérance d'anticrénelage — voir `test/flutter_test_config.dart`.
+      - name: flutter test
+        working-directory: app
+        run: flutter test
 
   build:
     name: build de vérification — Android + web
     runs-on: ubuntu-latest
-    needs: app
-    defaults:
-      run:
-        working-directory: app
+    needs: [app, bridge]
     steps:
       - uses: actions/checkout@v7
 
@@ -85,17 +124,35 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      # cargokit compile `bridge/` pour chaque architecture Android : la
+      # toolchain Rust et les cibles sont donc nécessaires ici aussi.
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: >-
+            aarch64-linux-android,
+            armv7-linux-androideabi,
+            x86_64-linux-android,
+            i686-linux-android
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: bridge
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
-      - run: flutter pub get
+      - name: flutter pub get
+        working-directory: app
+        run: flutter pub get
 
       # APK de debug : signé avec la clé de debug locale, jamais publié (§4).
       - name: Build Android (debug)
+        working-directory: app
         run: flutter build apk --debug
 
       - name: Build web
+        working-directory: app
         run: flutter build web

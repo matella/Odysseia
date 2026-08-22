@@ -1,0 +1,19 @@
+[package]
+name = "odysseia_bridge"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Pont flutter_rust_bridge entre timeline_core et l'application Flutter."
+publish = false
+
+# `cdylib` pour Android/desktop/web, `staticlib` pour iOS, `lib` pour que
+# `cargo test` puisse charger le crate normalement.
+[lib]
+crate-type = ["cdylib", "staticlib", "lib"]
+
+[dependencies]
+# Le pont dépend du cœur ; jamais l'inverse. `timeline_core` ne connaît ni
+# Flutter, ni Dart, ni flutter_rust_bridge (§6.1) — c'est ici, et seulement
+# ici, que les deux mondes se rencontrent.
+timeline_core = { path = "../core" }
+flutter_rust_bridge = "=2.12.0"

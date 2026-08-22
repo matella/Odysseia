@@ -29,3 +29,13 @@ Versioning: [Semantic Versioning](https://semver.org/).
   utilisateur, et suppression totale explicite (§3.7).
 - Tests de survie au ré-import, côté base (`app/test/data/`) et côté sens
   (`core/tests/pipeline_reimport.rs`).
+- Pont `flutter_rust_bridge` (`bridge/`) : `timeline_core` reste sans
+  dépendance Flutter/Dart (§6.1), toute la glue vit dans un crate séparé.
+  L'API n'expose aucune fonction renvoyant de la donnée non filtrée.
+- Statistiques §3.4 dans `core/src/stats/` : un seul mécanisme d'histogramme,
+  six choix de clé — pas six calculs ad hoc.
+- Plan de frames §3.5 dans `core/src/render/` : déterministe, sans encodeur.
+- Les trois vues (§3.3–3.5) et leur navigation, alimentées par
+  `TimelineRepository` — seul chemin vers les données.
+- Internationalisation anglais + français (§3.9) et 18 golden tests, une
+  image par vue **et par locale** (§3.10).

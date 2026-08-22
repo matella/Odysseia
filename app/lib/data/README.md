@@ -35,9 +35,11 @@ Seul `deleteAllUserData()` emporte les deux zones : c'est l'action explicite
 cd app && dart run build_runner build
 ```
 
-## Manque encore
+## Le seul chemin vers les données
 
-Le pipeline §5.4 vit dans `core/src/pipeline/` mais n'est **pas encore
-appelable** : `flutter_rust_bridge` n'est pas configuré (§6.2). Quand il le
-sera, les vues devront passer par lui — jamais interroger les tables ci-dessus
-directement, sous peine de contourner les zones privées.
+`timeline_repository.dart` est la seule classe autorisée à lire les tables
+§5.1. Sa méthode de collecte est privée et ses méthodes publiques ne
+renvoient que des types déjà passés par le pipeline §5.4, via le pont.
+
+Une vue n'a aucun moyen d'obtenir une ligne brute : pour contourner les zones
+privées, il faudrait modifier ce fichier — ce qui se voit en revue.

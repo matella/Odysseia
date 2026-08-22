@@ -37,6 +37,19 @@ dependencies:
 
   # Base locale SQLite (§3.2) — partout, y compris web via sqlite3.wasm.
   drift: ^2.34.0
+  # Plugin cargokit : compile `bridge/` pour chaque plateforme et embarque
+  # la bibliothèque native dans l'app.
+  odysseia_bridge:
+    path: rust_builder
+
+  # Internationalisation (§3.9) : anglais + français dès la v1.
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  # Runtime du pont. La version doit correspondre exactement à celle du
+  # générateur (`flutter_rust_bridge_codegen`) et à celle du crate.
+  flutter_rust_bridge: 2.12.0
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +72,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  # Active la génération des classes de localisation (§3.9).
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -95,3 +110,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Génération du pont (§6.1). Les fichiers produits sont commités mais jamais
+# édités à la main — on régénère.
+flutter_rust_bridge:
+  rust_input: crate::api
+  rust_root: ../bridge/
+  dart_output: lib/bridge/generated
