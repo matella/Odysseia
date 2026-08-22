@@ -1,152 +1,31 @@
 //! Modèle de données (§5).
 //!
-//! Deux zones strictement séparées :
-//! - **importée** (§5.1) — remplacée à chaque import ;
-//! - **utilisateur** (§5.2) — survit à tout ré-import, ne référence jamais un
-//!   id de la zone importée.
+//! Le principe directeur du schéma est une **frontière**, pas une
+//! convention de nommage :
 //!
-//! Ce module ne contient pour l'instant que la zone importée, produite par
-//! [`crate::parse`]. Les structures portées ici sont **pré-persistance** :
-//! elles n'ont ni `id` ni `batch_id`, attribués par la base au moment de
-//! l'insertion par lots (§4).
+//! | Zone | Module | Ré-import |
+//! | --- | --- | --- |
+//! | importée (§5.1) | [`imported`] | vidée et reconstruite |
+//! | utilisateur (§5.2) | [`user`] | **jamais touchée** |
+//! | référentiel (§5.3) | [`geo`] | embarqué, lecture seule |
 //!
-//! Le modèle n'est pas calqué sur le format Google (§3.1) : chaque
-//! enregistrement porte son [`SourceKind`], et les identifiants propres à une
-//! source restent dans des champs `external_*`.
+//! Cette séparation est vérifiable au niveau du type : **aucune structure de
+//! [`user`] ne contient d'identifiant issu de [`imported`]**. Un ré-import
+//! change tous les identifiants de la zone importée (§3.1) ; une donnée
+//! utilisateur qui en référencerait un serait cassée à chaque mise à jour de
+//! l'export. Le rattachement est donc géographique ([`user::UserPlace`],
+//! [`user::PrivateZone`]) ou par empreinte tolérante
+//! ([`user::UserSegmentOverride`], §4).
 //!
-//! Temps : UTC + offset stockés **séparément** (§5.5), jamais l'heure locale
-//! seule — les patterns horaires et les trajets qui traversent un fuseau en
-//! dépendent.
+//! Toute la lecture de ces données passe par [`crate::pipeline`] (§5.4).
 
-/// Origine d'un enregistrement (§3.1).
-///
-/// Point d'extension : GPX, Strava et les données de fitness viendront après
-/// la v1, derrière la même interface d'import.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-#[non_exhaustive]
-pub enum SourceKind {
-    /// Export Google Timeline.
-    GoogleTimeline,
-}
+pub mod geo;
+pub mod imported;
+pub mod user;
 
-/// Format concret détecté dans la source — `import_batch.source_format_detected`
-/// (§5.1).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[non_exhaustive]
-pub enum SourceFormat {
-    /// Objet de premier niveau contenant `semanticSegments` (legacy).
-    GoogleSemanticSegments,
-    /// Tableau de premier niveau (format actuel).
-    GoogleDirectArray,
-}
-
-/// Mode de transport détecté par la source (§5.1).
-///
-/// `detected_mode` conserve **toujours** la valeur d'origine : une correction
-/// utilisateur vit dans `user_segment_override` (§5.2) et est appliquée par le
-/// pipeline (§5.4), elle n'écrase jamais cette valeur.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[non_exhaustive]
-pub enum TravelMode {
-    /// À pied.
-    Walking,
-    /// Course à pied.
-    Running,
-    /// À vélo.
-    Cycling,
-    /// En véhicule particulier.
-    InVehicle,
-    /// En bus.
-    InBus,
-    /// En train, métro ou tram.
-    InTrain,
-    /// En bateau.
-    Boat,
-    /// À moto.
-    Motorcycling,
-    /// En avion.
-    Flight,
-    /// Non détecté ou valeur inconnue de la source.
-    Unknown,
-}
-
-/// Position brute — `raw_point` (§5.1).
-#[derive(Debug, Clone, PartialEq)]
-pub struct RawPoint {
-    /// Instant UTC, en millisecondes depuis l'epoch.
-    pub timestamp_utc: i64,
-    /// Décalage du fuseau local au moment de la mesure, en minutes (§5.5).
-    pub tz_offset_minutes: i16,
-    /// Latitude décimale, dans [-90, 90].
-    pub lat: f64,
-    /// Longitude décimale, dans [-180, 180].
-    pub lon: f64,
-    /// Précision annoncée, en mètres.
-    pub accuracy_m: Option<f32>,
-    /// Altitude, en mètres.
-    pub altitude_m: Option<f32>,
-    /// Vitesse instantanée, en mètres par seconde.
-    pub speed_ms: Option<f32>,
-    /// Origine de l'enregistrement.
-    pub source_kind: SourceKind,
-}
-
-/// Déplacement détecté entre deux visites — `segment` (§5.1).
-#[derive(Debug, Clone, PartialEq)]
-pub struct Segment {
-    /// Début, en millisecondes UTC depuis l'epoch.
-    pub start_ts_utc: i64,
-    /// Décalage local au départ, en minutes.
-    pub start_tz_offset_minutes: i16,
-    /// Fin, en millisecondes UTC depuis l'epoch.
-    pub end_ts_utc: i64,
-    /// Décalage local à l'arrivée, en minutes — différent du départ si le
-    /// trajet traverse un fuseau (§5.5).
-    pub end_tz_offset_minutes: i16,
-    /// Latitude de départ.
-    pub start_lat: f64,
-    /// Longitude de départ.
-    pub start_lon: f64,
-    /// Latitude d'arrivée.
-    pub end_lat: f64,
-    /// Longitude d'arrivée.
-    pub end_lon: f64,
-    /// Distance annoncée par la source, en mètres.
-    pub distance_m: Option<f64>,
-    /// Mode détecté par la source — jamais écrasé par une correction (§5.1).
-    pub detected_mode: TravelMode,
-    /// Confiance annoncée par la source, dans [0, 1].
-    pub mode_confidence: Option<f32>,
-    /// Origine de l'enregistrement.
-    pub source_kind: SourceKind,
-}
-
-/// Arrêt détecté à un endroit — `visit` (§5.1).
-#[derive(Debug, Clone, PartialEq)]
-pub struct Visit {
-    /// Arrivée, en millisecondes UTC depuis l'epoch.
-    pub arrival_ts_utc: i64,
-    /// Décalage local à l'arrivée, en minutes.
-    pub arrival_tz_offset_minutes: i16,
-    /// Départ, en millisecondes UTC depuis l'epoch.
-    pub departure_ts_utc: i64,
-    /// Décalage local au départ, en minutes.
-    pub departure_tz_offset_minutes: i16,
-    /// Latitude du lieu.
-    pub lat: f64,
-    /// Longitude du lieu.
-    pub lon: f64,
-    /// Rayon annoncé, en mètres.
-    pub radius_m: Option<f64>,
-    /// Identifiant de lieu **propre à la source** (`placeId` Google).
-    ///
-    /// Volontairement distinct de `visit.place_id` (§5.1), qui référence le
-    /// référentiel embarqué `geo_place` (§5.3) et est résolu plus tard par le
-    /// pipeline. Recopier l'identifiant Google dans `place_id` calquerait le
-    /// modèle sur Google (§3.1).
-    pub external_place_ref: Option<String>,
-    /// Confiance de détection annoncée par la source, dans [0, 1].
-    pub detection_confidence: Option<f32>,
-    /// Origine de l'enregistrement.
-    pub source_kind: SourceKind,
-}
+pub use geo::GeoPlace;
+pub use imported::{ImportBatch, RawPoint, Segment, SourceFormat, SourceKind, TravelMode, Visit};
+pub use user::{
+    AppSetting, LocalDate, OVERRIDE_COORD_DECIMALS, PrivateZone, UserPlace, UserSegmentOverride,
+    ZoneShape,
+};

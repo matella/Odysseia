@@ -19,3 +19,13 @@ Versioning: [Semantic Versioning](https://semver.org/).
   `CoordError` / `TimeError`.
 - Fixtures et tests de la couche de parsing : 48 tests, dont une preuve
   de mémoire bornée sur un export généré de 5 Mo (§4).
+- Modèle §5 complet dans `core/src/model/` : zone importée (§5.1), zone
+  utilisateur (§5.2) et référentiel embarqué (§5.3), séparés en modules
+  distincts — aucune structure de §5.2 ne porte d'identifiant de §5.1.
+- Pipeline §5.4 dans `core/src/pipeline/` : zones privées → noms de lieux
+  → corrections de mode → filtres de vue, dans cet ordre.
+- Schéma drift dans `app/lib/data/` : les neuf tables de §5, index de
+  volume, ré-import transactionnel qui ne touche jamais la zone
+  utilisateur, et suppression totale explicite (§3.7).
+- Tests de survie au ré-import, côté base (`app/test/data/`) et côté sens
+  (`core/tests/pipeline_reimport.rs`).

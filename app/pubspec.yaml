@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # Base locale SQLite (§3.2) — partout, y compris web via sqlite3.wasm.
+  drift: ^2.34.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,6 +48,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+
+  # Génération du code drift. Les fichiers générés sont commités mais
+  # jamais édités à la main, comme ceux du bridge (§6.1).
+  drift_dev: ^2.34.0
+  build_runner: ^2.4.13
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
