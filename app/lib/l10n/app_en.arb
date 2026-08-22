@@ -1,29 +1,41 @@
 {
   "@@locale": "en",
-
   "appTitle": "Odysseia",
-  "@appTitle": { "description": "Application name (§3.9)" },
-
+  "@appTitle": {
+    "description": "Application name (§3.9)"
+  },
   "navStory": "Story",
-  "@navStory": { "description": "Story view tab (§3.3)" },
+  "@navStory": {
+    "description": "Story view tab (§3.3)"
+  },
   "navStats": "Stats",
-  "@navStats": { "description": "Stats view tab (§3.4)" },
+  "@navStats": {
+    "description": "Stats view tab (§3.4)"
+  },
   "navVideo": "Video",
-  "@navVideo": { "description": "Memory video tab (§3.5)" },
-
+  "@navVideo": {
+    "description": "Memory video tab (§3.5)"
+  },
   "granularityDay": "Day",
   "granularityWeek": "Week",
   "granularityMonth": "Month",
   "granularityYear": "Year",
-  "@granularityDay": { "description": "Story navigation granularity (§3.3)" },
-
+  "@granularityDay": {
+    "description": "Story navigation granularity (§3.3)"
+  },
   "storyEmpty": "Nothing recorded for this period",
-  "@storyEmpty": { "description": "Story view with no data (§3.3)" },
+  "@storyEmpty": {
+    "description": "Story view with no data (§3.3)"
+  },
   "storyEmptyHint": "Try another period, or import a Timeline export.",
   "storyVisitAt": "Stay at {place}",
   "@storyVisitAt": {
     "description": "A visit entry in the story (§3.3)",
-    "placeholders": { "place": { "type": "String" } }
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
   },
   "storyUnnamedPlace": "Unnamed place",
   "@storyUnnamedPlace": {
@@ -33,8 +45,12 @@
   "@storyTripFromTo": {
     "description": "A trip entry in the story (§3.3)",
     "placeholders": {
-      "from": { "type": "String" },
-      "to": { "type": "String" }
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
     }
   },
   "storyCorrectedBadge": "corrected",
@@ -49,7 +65,6 @@
   "@storyPhotosUnavailable": {
     "description": "Photo correlation not enabled (§3.1)"
   },
-
   "modeWalking": "Walking",
   "modeRunning": "Running",
   "modeCycling": "Cycling",
@@ -60,8 +75,9 @@
   "modeMotorcycling": "By motorbike",
   "modeFlight": "By plane",
   "modeUnknown": "Unknown",
-  "@modeWalking": { "description": "Travel mode label (§5.1)" },
-
+  "@modeWalking": {
+    "description": "Travel mode label (§5.1)"
+  },
   "weekdayMonday": "Mon",
   "weekdayTuesday": "Tue",
   "weekdayWednesday": "Wed",
@@ -69,8 +85,9 @@
   "weekdayFriday": "Fri",
   "weekdaySaturday": "Sat",
   "weekdaySunday": "Sun",
-  "@weekdayMonday": { "description": "Short weekday for the stats view (§3.4)" },
-
+  "@weekdayMonday": {
+    "description": "Short weekday for the stats view (§3.4)"
+  },
   "statsTitle": "Stats & patterns",
   "statsDensity": "Density heatmap",
   "statsTopPlaces": "Most visited places",
@@ -79,32 +96,45 @@
   "statsWeekday": "Day-of-week patterns",
   "statsTotalDistance": "Total distance",
   "statsModeBreakdown": "By travel mode",
-  "@statsDensity": { "description": "One of the six §3.4 statistics" },
-
+  "@statsDensity": {
+    "description": "One of the six §3.4 statistics"
+  },
   "statsEmpty": "No data for these filters",
   "statsVisitCount": "{count, plural, =0{No stays} =1{1 stay} other{{count} stays}}",
   "@statsVisitCount": {
     "description": "Number of stays after pipeline filtering (§5.4)",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "statsSegmentCount": "{count, plural, =0{No trips} =1{1 trip} other{{count} trips}}",
   "@statsSegmentCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "filtersTitle": "Filters",
   "filtersPeriod": "Period",
   "filtersPlace": "Place",
   "filtersMode": "Travel mode",
   "filtersAll": "All",
   "filtersClear": "Clear filters",
-  "@filtersTitle": { "description": "Combinable filters (§3.4)" },
-
+  "@filtersTitle": {
+    "description": "Combinable filters (§3.4)"
+  },
   "videoTitle": "Memory video",
   "videoDuration": "Duration",
   "videoDurationSeconds": "{seconds}s",
   "@videoDurationSeconds": {
-    "placeholders": { "seconds": { "type": "int" } }
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
   },
   "videoPeriod": "Period",
   "videoStyle": "Visual style",
@@ -115,30 +145,46 @@
   "videoTitleTemplateHint": "My year in {year}",
   "@videoTitleTemplateHint": {
     "description": "Placeholder text shown in the title field (§3.5)",
-    "placeholders": { "year": { "type": "String" } }
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
   },
   "videoRender": "Generate video",
   "videoPreview": "Preview",
   "videoFrameCount": "{count} frames",
   "@videoFrameCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "videoWebSlowWarning": "Rendering in the browser is much slower than on device. You can keep using the app while it runs.",
-  "@videoWebSlowWarning": { "description": "Required web warning (§3.5)" },
+  "@videoWebSlowWarning": {
+    "description": "Required web warning (§3.5)"
+  },
   "videoEncoderUnavailable": "Video export is not wired up yet — preview only.",
   "@videoEncoderUnavailable": {
     "description": "Honest state while the MP4 encoder is not integrated (§3.5)"
   },
-
   "progressStep": "Step {step}",
   "@progressStep": {
-    "placeholders": { "step": { "type": "String" } }
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
   },
   "progressPercent": "{percent}%",
   "@progressPercent": {
-    "placeholders": { "percent": { "type": "int" } }
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
   },
-
   "errorEmptyExport": "This export contains no data.",
   "errorCorruptJson": "This file is not valid JSON and could not be read.",
   "errorUnrecognisedFormat": "This export format is not recognised. It may come from a newer version of Google Timeline.",
@@ -147,9 +193,73 @@
   "@errorEmptyExport": {
     "description": "One message per error case (§3.10) — never a generic catch-all"
   },
-
   "privateZoneHidden": "Some data is hidden by your private zones",
   "@privateZoneHidden": {
     "description": "Shown when private zones are active (§3.7)"
-  }
+  },
+  "importTitle": "Import",
+  "importIntro": "Import your Google Timeline export. Everything is processed on this device — nothing is sent anywhere (§2).",
+  "importChoose": "Choose a file",
+  "importPickerUnavailable": "File picking is not wired up on this platform yet. Import works — it just needs a path.",
+  "importReplaceWarning": "A new import replaces the current dataset. Your named places, private zones and corrections are kept.",
+  "importRunning": "Importing…",
+  "importStepDetecting": "Detecting format",
+  "importStepReading": "Reading records",
+  "importStepDone": "Finishing",
+  "importRecords": "{count} records",
+  "@importRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importSucceeded": "Import finished",
+  "importCounts": "{visits} stays · {segments} trips · {points} points",
+  "@importCounts": {
+    "placeholders": {
+      "visits": {
+        "type": "int"
+      },
+      "segments": {
+        "type": "int"
+      },
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "importSkipped": "{count, plural, =0{} =1{1 record was unreadable and skipped} other{{count} records were unreadable and skipped}}",
+  "@importSkipped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importShorterWarning": "This export covers a shorter period than the previous one. Older history may be missing from it.",
+  "settingsTitle": "Settings",
+  "settingsCapabilities": "Platform",
+  "settingsIntegrations": "Optional integrations",
+  "settingsIntegrationsIntro": "All off by default. Each one sends Timeline-derived data to a third party — what exactly is stated below.",
+  "settingsMapTiles": "Map tiles (OpenStreetMap)",
+  "settingsMapTilesDetail": "Sends only the map areas you look at. Never any Timeline data.",
+  "settingsImmich": "Immich photo server",
+  "settingsImmichDetail": "Sends dates and coordinates derived from your Timeline to the server you configure.",
+  "settingsWeather": "Historical weather",
+  "settingsWeatherDetail": "Sends coordinates rounded to 2 decimals (~1.1 km) and a date to a third-party weather API.",
+  "settingsMyData": "My data",
+  "settingsExport": "Export everything",
+  "settingsDelete": "Delete all local data",
+  "settingsDeleteConfirm": "This permanently deletes your imported data, named places, private zones and corrections. This cannot be undone.",
+  "settingsDeleteDone": "All local data deleted",
+  "commonCancel": "Cancel",
+  "commonConfirm": "Confirm",
+  "commonClose": "Close",
+  "capabilityDatabase": "Local database",
+  "capabilityBridge": "Compute core",
+  "capabilityVideoExport": "Video export",
+  "capabilityAvailable": "Available",
+  "capabilityUnavailable": "Not available on this platform",
+  "capabilityNotWired": "Not wired up yet"
 }

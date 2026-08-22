@@ -3,6 +3,7 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
+import 'api/import.dart';
 import 'api/timeline.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -19,6 +20,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   });
 
   @protected
+  AnyhowException dco_decode_AnyhowException(dynamic raw);
+
+  @protected
+  RustStreamSink<ImportEvent> dco_decode_StreamSink_import_event_Sse(
+    dynamic raw,
+  );
+
+  @protected
   String dco_decode_String(dynamic raw);
 
   @protected
@@ -29,6 +38,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   PlatformInt64 dco_decode_box_autoadd_i_64(dynamic raw);
+
+  @protected
+  ImportChunk dco_decode_box_autoadd_import_chunk(dynamic raw);
+
+  @protected
+  ImportProgress dco_decode_box_autoadd_import_progress(dynamic raw);
+
+  @protected
+  ImportSummaryOutput dco_decode_box_autoadd_import_summary_output(dynamic raw);
 
   @protected
   PipelineRequest dco_decode_box_autoadd_pipeline_request(dynamic raw);
@@ -61,6 +79,33 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   PlatformInt64 dco_decode_i_64(dynamic raw);
 
   @protected
+  ImportChunk dco_decode_import_chunk(dynamic raw);
+
+  @protected
+  ImportErrorKind dco_decode_import_error_kind(dynamic raw);
+
+  @protected
+  ImportEvent dco_decode_import_event(dynamic raw);
+
+  @protected
+  ImportProgress dco_decode_import_progress(dynamic raw);
+
+  @protected
+  ImportStepKind dco_decode_import_step_kind(dynamic raw);
+
+  @protected
+  ImportSummaryOutput dco_decode_import_summary_output(dynamic raw);
+
+  @protected
+  ImportedPoint dco_decode_imported_point(dynamic raw);
+
+  @protected
+  ImportedSegment dco_decode_imported_segment(dynamic raw);
+
+  @protected
+  ImportedVisit dco_decode_imported_visit(dynamic raw);
+
+  @protected
   List<BucketOutput> dco_decode_list_bucket_output(dynamic raw);
 
   @protected
@@ -68,6 +113,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<HeatCellOutput> dco_decode_list_heat_cell_output(dynamic raw);
+
+  @protected
+  List<ImportedPoint> dco_decode_list_imported_point(dynamic raw);
+
+  @protected
+  List<ImportedSegment> dco_decode_list_imported_segment(dynamic raw);
+
+  @protected
+  List<ImportedVisit> dco_decode_list_imported_visit(dynamic raw);
 
   @protected
   List<OverrideInput> dco_decode_list_override_input(dynamic raw);
@@ -188,6 +242,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   VisitInput dco_decode_visit_input(dynamic raw);
 
   @protected
+  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
+
+  @protected
+  RustStreamSink<ImportEvent> sse_decode_StreamSink_import_event_Sse(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
@@ -198,6 +260,19 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   PlatformInt64 sse_decode_box_autoadd_i_64(SseDeserializer deserializer);
+
+  @protected
+  ImportChunk sse_decode_box_autoadd_import_chunk(SseDeserializer deserializer);
+
+  @protected
+  ImportProgress sse_decode_box_autoadd_import_progress(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ImportSummaryOutput sse_decode_box_autoadd_import_summary_output(
+    SseDeserializer deserializer,
+  );
 
   @protected
   PipelineRequest sse_decode_box_autoadd_pipeline_request(
@@ -234,6 +309,35 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   PlatformInt64 sse_decode_i_64(SseDeserializer deserializer);
 
   @protected
+  ImportChunk sse_decode_import_chunk(SseDeserializer deserializer);
+
+  @protected
+  ImportErrorKind sse_decode_import_error_kind(SseDeserializer deserializer);
+
+  @protected
+  ImportEvent sse_decode_import_event(SseDeserializer deserializer);
+
+  @protected
+  ImportProgress sse_decode_import_progress(SseDeserializer deserializer);
+
+  @protected
+  ImportStepKind sse_decode_import_step_kind(SseDeserializer deserializer);
+
+  @protected
+  ImportSummaryOutput sse_decode_import_summary_output(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ImportedPoint sse_decode_imported_point(SseDeserializer deserializer);
+
+  @protected
+  ImportedSegment sse_decode_imported_segment(SseDeserializer deserializer);
+
+  @protected
+  ImportedVisit sse_decode_imported_visit(SseDeserializer deserializer);
+
+  @protected
   List<BucketOutput> sse_decode_list_bucket_output(
     SseDeserializer deserializer,
   );
@@ -243,6 +347,21 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<HeatCellOutput> sse_decode_list_heat_cell_output(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  List<ImportedPoint> sse_decode_list_imported_point(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  List<ImportedSegment> sse_decode_list_imported_segment(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  List<ImportedVisit> sse_decode_list_imported_visit(
     SseDeserializer deserializer,
   );
 
@@ -385,6 +504,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   VisitInput sse_decode_visit_input(SseDeserializer deserializer);
 
   @protected
+  void sse_encode_AnyhowException(
+    AnyhowException self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_StreamSink_import_event_Sse(
+    RustStreamSink<ImportEvent> self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
@@ -396,6 +527,24 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_box_autoadd_i_64(
     PlatformInt64 self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_import_chunk(
+    ImportChunk self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_import_progress(
+    ImportProgress self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_import_summary_output(
+    ImportSummaryOutput self,
     SseSerializer serializer,
   );
 
@@ -442,6 +591,48 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_i_64(PlatformInt64 self, SseSerializer serializer);
 
   @protected
+  void sse_encode_import_chunk(ImportChunk self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_import_error_kind(
+    ImportErrorKind self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_import_event(ImportEvent self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_import_progress(
+    ImportProgress self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_import_step_kind(
+    ImportStepKind self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_import_summary_output(
+    ImportSummaryOutput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_imported_point(ImportedPoint self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_imported_segment(
+    ImportedSegment self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_imported_visit(ImportedVisit self, SseSerializer serializer);
+
+  @protected
   void sse_encode_list_bucket_output(
     List<BucketOutput> self,
     SseSerializer serializer,
@@ -456,6 +647,24 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_list_heat_cell_output(
     List<HeatCellOutput> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_imported_point(
+    List<ImportedPoint> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_imported_segment(
+    List<ImportedSegment> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_imported_visit(
+    List<ImportedVisit> self,
     SseSerializer serializer,
   );
 

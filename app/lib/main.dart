@@ -4,7 +4,6 @@
 // **aucune** logique métier. Parsing, clustering, stats et génération de
 // frames vivent dans `core/`. Le Dart orchestre l'UI, la base et le pont.
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -12,9 +11,7 @@ import 'bridge/generated/frb_generated.dart';
 import 'data/connection/connection.dart';
 import 'data/database.dart';
 import 'data/timeline_repository.dart';
-import 'features/stats/stats_view.dart';
-import 'features/story/story_view.dart';
-import 'features/video/video_view.dart';
+import 'features/home_shell.dart';
 import 'l10n/generated/app_localizations.dart';
 
 Future<void> main() async {
@@ -68,71 +65,5 @@ class OdysseiaApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       home: HomeShell(repository: repository),
     );
-  }
-}
-
-/// Coquille de navigation entre les trois vues (§3.3–3.5).
-class HomeShell extends StatefulWidget {
-  /// Crée la coquille.
-  const HomeShell({super.key, this.repository});
-
-  /// Accès aux données.
-  final TimelineRepository? repository;
-
-  @override
-  State<HomeShell> createState() => _HomeShellState();
-}
-
-class _HomeShellState extends State<HomeShell> {
-  int _tab = 0;
-  StoryGranularity _granularity = StoryGranularity.day;
-  VideoSettings _videoSettings = const VideoSettings();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
-    return Scaffold(
-      body: SafeArea(child: _body()),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _tab,
-        onDestinationSelected: (index) => setState(() => _tab = index),
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.timeline),
-            label: l10n.navStory,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.insights),
-            label: l10n.navStats,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.movie_outlined),
-            label: l10n.navVideo,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _body() {
-    // Sans dépôt — tests de widgets, plateforme web, ou app pas encore
-    // initialisée — les vues s'affichent vides plutôt que de planter (§3.10).
-    return switch (_tab) {
-      0 => StoryView(
-        visits: const [],
-        segments: const [],
-        granularity: _granularity,
-        periodLabel: '',
-        onGranularityChanged: (value) => setState(() => _granularity = value),
-      ),
-      1 => StatsView(stats: emptyStats()),
-      _ => VideoView(
-        settings: _videoSettings,
-        plan: null,
-        isWeb: kIsWeb,
-        onSettingsChanged: (value) => setState(() => _videoSettings = value),
-      ),
-    };
   }
 }

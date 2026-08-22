@@ -14,6 +14,7 @@ localement sur l'appareil — aucune donnée Timeline n'est envoyée à un serve
 | --- | --- |
 | Arborescence §6 + CI légère | fait |
 | Parsing streaming + fixtures (§3.10) | fait |
+| Import de bout en bout (§3.1, §4) | fait, sans sélecteur de fichier |
 | Schéma §5 en base + pipeline §5.4 | fait (bridge non branché) |
 | Vues Récit / Stats / Vidéo | rendu fait, encodage MP4 à faire |
 

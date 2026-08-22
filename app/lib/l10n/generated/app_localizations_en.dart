@@ -264,4 +264,140 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privateZoneHidden => 'Some data is hidden by your private zones';
+
+  @override
+  String get importTitle => 'Import';
+
+  @override
+  String get importIntro =>
+      'Import your Google Timeline export. Everything is processed on this device — nothing is sent anywhere (§2).';
+
+  @override
+  String get importChoose => 'Choose a file';
+
+  @override
+  String get importPickerUnavailable =>
+      'File picking is not wired up on this platform yet. Import works — it just needs a path.';
+
+  @override
+  String get importReplaceWarning =>
+      'A new import replaces the current dataset. Your named places, private zones and corrections are kept.';
+
+  @override
+  String get importRunning => 'Importing…';
+
+  @override
+  String get importStepDetecting => 'Detecting format';
+
+  @override
+  String get importStepReading => 'Reading records';
+
+  @override
+  String get importStepDone => 'Finishing';
+
+  @override
+  String importRecords(int count) {
+    return '$count records';
+  }
+
+  @override
+  String get importSucceeded => 'Import finished';
+
+  @override
+  String importCounts(int visits, int segments, int points) {
+    return '$visits stays · $segments trips · $points points';
+  }
+
+  @override
+  String importSkipped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records were unreadable and skipped',
+      one: '1 record was unreadable and skipped',
+      zero: '',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get importShorterWarning =>
+      'This export covers a shorter period than the previous one. Older history may be missing from it.';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsCapabilities => 'Platform';
+
+  @override
+  String get settingsIntegrations => 'Optional integrations';
+
+  @override
+  String get settingsIntegrationsIntro =>
+      'All off by default. Each one sends Timeline-derived data to a third party — what exactly is stated below.';
+
+  @override
+  String get settingsMapTiles => 'Map tiles (OpenStreetMap)';
+
+  @override
+  String get settingsMapTilesDetail =>
+      'Sends only the map areas you look at. Never any Timeline data.';
+
+  @override
+  String get settingsImmich => 'Immich photo server';
+
+  @override
+  String get settingsImmichDetail =>
+      'Sends dates and coordinates derived from your Timeline to the server you configure.';
+
+  @override
+  String get settingsWeather => 'Historical weather';
+
+  @override
+  String get settingsWeatherDetail =>
+      'Sends coordinates rounded to 2 decimals (~1.1 km) and a date to a third-party weather API.';
+
+  @override
+  String get settingsMyData => 'My data';
+
+  @override
+  String get settingsExport => 'Export everything';
+
+  @override
+  String get settingsDelete => 'Delete all local data';
+
+  @override
+  String get settingsDeleteConfirm =>
+      'This permanently deletes your imported data, named places, private zones and corrections. This cannot be undone.';
+
+  @override
+  String get settingsDeleteDone => 'All local data deleted';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonConfirm => 'Confirm';
+
+  @override
+  String get commonClose => 'Close';
+
+  @override
+  String get capabilityDatabase => 'Local database';
+
+  @override
+  String get capabilityBridge => 'Compute core';
+
+  @override
+  String get capabilityVideoExport => 'Video export';
+
+  @override
+  String get capabilityAvailable => 'Available';
+
+  @override
+  String get capabilityUnavailable => 'Not available on this platform';
+
+  @override
+  String get capabilityNotWired => 'Not wired up yet';
 }

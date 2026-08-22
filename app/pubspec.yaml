@@ -47,6 +47,10 @@ dependencies:
     sdk: flutter
   intl: any
 
+  # `ImportEvent` est une somme (progression | lot | fini | échec) :
+  # flutter_rust_bridge la traduit en union scellée via freezed.
+  freezed_annotation: ^3.1.0
+
   # Runtime du pont. La version doit correspondre exactement à celle du
   # générateur (`flutter_rust_bridge_codegen`) et à celle du crate.
   flutter_rust_bridge: 2.12.0
@@ -65,6 +69,7 @@ dev_dependencies:
   # Génération du code drift. Les fichiers générés sont commités mais
   # jamais édités à la main, comme ceux du bridge (§6.1).
   drift_dev: ^2.34.0
+  freezed: ^3.2.0
   build_runner: ^2.4.13
 
 # For information on the generic Dart part of this file, see the

@@ -535,6 +535,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Some data is hidden by your private zones'**
   String get privateZoneHidden;
+
+  /// No description provided for @importTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get importTitle;
+
+  /// No description provided for @importIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Import your Google Timeline export. Everything is processed on this device — nothing is sent anywhere (§2).'**
+  String get importIntro;
+
+  /// No description provided for @importChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a file'**
+  String get importChoose;
+
+  /// No description provided for @importPickerUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'File picking is not wired up on this platform yet. Import works — it just needs a path.'**
+  String get importPickerUnavailable;
+
+  /// No description provided for @importReplaceWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'A new import replaces the current dataset. Your named places, private zones and corrections are kept.'**
+  String get importReplaceWarning;
+
+  /// No description provided for @importRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing…'**
+  String get importRunning;
+
+  /// No description provided for @importStepDetecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting format'**
+  String get importStepDetecting;
+
+  /// No description provided for @importStepReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading records'**
+  String get importStepReading;
+
+  /// No description provided for @importStepDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Finishing'**
+  String get importStepDone;
+
+  /// No description provided for @importRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} records'**
+  String importRecords(int count);
+
+  /// No description provided for @importSucceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Import finished'**
+  String get importSucceeded;
+
+  /// No description provided for @importCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{visits} stays · {segments} trips · {points} points'**
+  String importCounts(int visits, int segments, int points);
+
+  /// No description provided for @importSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{} =1{1 record was unreadable and skipped} other{{count} records were unreadable and skipped}}'**
+  String importSkipped(int count);
+
+  /// No description provided for @importShorterWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This export covers a shorter period than the previous one. Older history may be missing from it.'**
+  String get importShorterWarning;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsCapabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get settingsCapabilities;
+
+  /// No description provided for @settingsIntegrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional integrations'**
+  String get settingsIntegrations;
+
+  /// No description provided for @settingsIntegrationsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'All off by default. Each one sends Timeline-derived data to a third party — what exactly is stated below.'**
+  String get settingsIntegrationsIntro;
+
+  /// No description provided for @settingsMapTiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Map tiles (OpenStreetMap)'**
+  String get settingsMapTiles;
+
+  /// No description provided for @settingsMapTilesDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends only the map areas you look at. Never any Timeline data.'**
+  String get settingsMapTilesDetail;
+
+  /// No description provided for @settingsImmich.
+  ///
+  /// In en, this message translates to:
+  /// **'Immich photo server'**
+  String get settingsImmich;
+
+  /// No description provided for @settingsImmichDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends dates and coordinates derived from your Timeline to the server you configure.'**
+  String get settingsImmichDetail;
+
+  /// No description provided for @settingsWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Historical weather'**
+  String get settingsWeather;
+
+  /// No description provided for @settingsWeatherDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sends coordinates rounded to 2 decimals (~1.1 km) and a date to a third-party weather API.'**
+  String get settingsWeatherDetail;
+
+  /// No description provided for @settingsMyData.
+  ///
+  /// In en, this message translates to:
+  /// **'My data'**
+  String get settingsMyData;
+
+  /// No description provided for @settingsExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export everything'**
+  String get settingsExport;
+
+  /// No description provided for @settingsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all local data'**
+  String get settingsDelete;
+
+  /// No description provided for @settingsDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes your imported data, named places, private zones and corrections. This cannot be undone.'**
+  String get settingsDeleteConfirm;
+
+  /// No description provided for @settingsDeleteDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All local data deleted'**
+  String get settingsDeleteDone;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// No description provided for @commonConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get commonConfirm;
+
+  /// No description provided for @commonClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get commonClose;
+
+  /// No description provided for @capabilityDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Local database'**
+  String get capabilityDatabase;
+
+  /// No description provided for @capabilityBridge.
+  ///
+  /// In en, this message translates to:
+  /// **'Compute core'**
+  String get capabilityBridge;
+
+  /// No description provided for @capabilityVideoExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Video export'**
+  String get capabilityVideoExport;
+
+  /// No description provided for @capabilityAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get capabilityAvailable;
+
+  /// No description provided for @capabilityUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available on this platform'**
+  String get capabilityUnavailable;
+
+  /// No description provided for @capabilityNotWired.
+  ///
+  /// In en, this message translates to:
+  /// **'Not wired up yet'**
+  String get capabilityNotWired;
 }
 
 class _AppLocalizationsDelegate

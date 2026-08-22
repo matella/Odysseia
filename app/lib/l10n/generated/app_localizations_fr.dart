@@ -265,4 +265,141 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get privateZoneHidden =>
       'Certaines données sont masquées par vos zones privées';
+
+  @override
+  String get importTitle => 'Import';
+
+  @override
+  String get importIntro =>
+      'Importez votre export Google Timeline. Tout est traité sur cet appareil — rien n\'est envoyé nulle part (§2).';
+
+  @override
+  String get importChoose => 'Choisir un fichier';
+
+  @override
+  String get importPickerUnavailable =>
+      'Le sélecteur de fichier n\'est pas branché sur cette plateforme. L\'import fonctionne — il lui faut juste un chemin.';
+
+  @override
+  String get importReplaceWarning =>
+      'Un nouvel import remplace le jeu de données actuel. Vos lieux nommés, zones privées et corrections sont conservés.';
+
+  @override
+  String get importRunning => 'Import en cours…';
+
+  @override
+  String get importStepDetecting => 'Détection du format';
+
+  @override
+  String get importStepReading => 'Lecture des enregistrements';
+
+  @override
+  String get importStepDone => 'Finalisation';
+
+  @override
+  String importRecords(int count) {
+    return '$count enregistrements';
+  }
+
+  @override
+  String get importSucceeded => 'Import terminé';
+
+  @override
+  String importCounts(int visits, int segments, int points) {
+    return '$visits arrêts · $segments trajets · $points points';
+  }
+
+  @override
+  String importSkipped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count enregistrements illisibles ont été ignorés',
+      one: '1 enregistrement illisible a été ignoré',
+      zero: '',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get importShorterWarning =>
+      'Cet export couvre une période plus courte que le précédent. Il lui manque peut-être de l\'historique ancien.';
+
+  @override
+  String get settingsTitle => 'Réglages';
+
+  @override
+  String get settingsCapabilities => 'Plateforme';
+
+  @override
+  String get settingsIntegrations => 'Intégrations optionnelles';
+
+  @override
+  String get settingsIntegrationsIntro =>
+      'Toutes désactivées par défaut. Chacune transmet des données dérivées de la Timeline à un tiers — le détail est indiqué ci-dessous.';
+
+  @override
+  String get settingsMapTiles => 'Tuiles de carte (OpenStreetMap)';
+
+  @override
+  String get settingsMapTilesDetail =>
+      'Transmet uniquement les zones de carte affichées. Jamais de donnée Timeline.';
+
+  @override
+  String get settingsImmich => 'Serveur photo Immich';
+
+  @override
+  String get settingsImmichDetail =>
+      'Transmet des dates et coordonnées dérivées de votre Timeline au serveur que vous configurez.';
+
+  @override
+  String get settingsWeather => 'Météo historique';
+
+  @override
+  String get settingsWeatherDetail =>
+      'Transmet des coordonnées arrondies à 2 décimales (~1,1 km) et une date à une API météo tierce.';
+
+  @override
+  String get settingsMyData => 'Mes données';
+
+  @override
+  String get settingsExport => 'Tout exporter';
+
+  @override
+  String get settingsDelete => 'Supprimer toutes les données locales';
+
+  @override
+  String get settingsDeleteConfirm =>
+      'Ceci supprime définitivement vos données importées, vos lieux nommés, vos zones privées et vos corrections. C\'est irréversible.';
+
+  @override
+  String get settingsDeleteDone =>
+      'Toutes les données locales ont été supprimées';
+
+  @override
+  String get commonCancel => 'Annuler';
+
+  @override
+  String get commonConfirm => 'Confirmer';
+
+  @override
+  String get commonClose => 'Fermer';
+
+  @override
+  String get capabilityDatabase => 'Base locale';
+
+  @override
+  String get capabilityBridge => 'Moteur de calcul';
+
+  @override
+  String get capabilityVideoExport => 'Export vidéo';
+
+  @override
+  String get capabilityAvailable => 'Disponible';
+
+  @override
+  String get capabilityUnavailable => 'Indisponible sur cette plateforme';
+
+  @override
+  String get capabilityNotWired => 'Pas encore branché';
 }

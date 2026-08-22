@@ -66,6 +66,13 @@ class TimelineRepository {
     return planVideo(request: request, params: params);
   }
 
+  /// Supprime toutes les données locales (§3.7).
+  ///
+  /// Action explicite de l'écran « Mes données », irréversible et
+  /// confirmée par l'utilisateur — la seule qui emporte aussi la zone
+  /// utilisateur (§5.2).
+  Future<void> deleteAllUserData() => _db.deleteAllUserData();
+
   /// Rassemble ce dont le pipeline a besoin : les données de la période
   /// (§5.1) **et** toute la zone utilisateur (§5.2).
   ///

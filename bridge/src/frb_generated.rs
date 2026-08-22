@@ -27,7 +27,7 @@
 // Section: imports
 
 use flutter_rust_bridge::for_generated::byteorder::{NativeEndian, ReadBytesExt, WriteBytesExt};
-use flutter_rust_bridge::for_generated::{transform_result_dco, Lifetimeable, Lockable};
+use flutter_rust_bridge::for_generated::{Lifetimeable, Lockable, transform_result_dco};
 use flutter_rust_bridge::{Handler, IntoIntoDart};
 
 // Section: boilerplate
@@ -38,7 +38,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.12.0";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 1406327045;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -716907300;
 
 // Section: executor
 
@@ -111,6 +111,79 @@ fn wire__crate__api__timeline__filters_input_default_impl(
                 transform_result_sse::<_, ()>((move || {
                     let output_ok =
                         Result::<_, ()>::Ok(crate::api::timeline::FiltersInput::default())?;
+                    Ok(output_ok)
+                })())
+            }
+        },
+    )
+}
+fn wire__crate__api__import__import_chunk_default_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "import_chunk_default",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, ()>((move || {
+                    let output_ok =
+                        Result::<_, ()>::Ok(crate::api::import::ImportChunk::default())?;
+                    Ok(output_ok)
+                })())
+            }
+        },
+    )
+}
+fn wire__crate__api__import__import_timeline_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "import_timeline",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_path = <String>::sse_decode(&mut deserializer);
+            let api_max_bytes = <Option<i64>>::sse_decode(&mut deserializer);
+            let api_sink = <StreamSink<
+                crate::api::import::ImportEvent,
+                flutter_rust_bridge::for_generated::SseCodec,
+            >>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, ()>((move || {
+                    let output_ok = Result::<_, ()>::Ok({
+                        crate::api::import::import_timeline(api_path, api_max_bytes, api_sink);
+                    })?;
                     Ok(output_ok)
                 })())
             }
@@ -325,6 +398,24 @@ fn wire__crate__api__timeline__video_plan_result_default_impl(
 
 // Section: dart2rust
 
+impl SseDecode for flutter_rust_bridge::for_generated::anyhow::Error {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <String>::sse_decode(deserializer);
+        return flutter_rust_bridge::for_generated::anyhow::anyhow!("{}", inner);
+    }
+}
+
+impl SseDecode
+    for StreamSink<crate::api::import::ImportEvent, flutter_rust_bridge::for_generated::SseCodec>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <String>::sse_decode(deserializer);
+        return StreamSink::deserialize(inner);
+    }
+}
+
 impl SseDecode for String {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -427,6 +518,184 @@ impl SseDecode for i64 {
     }
 }
 
+impl SseDecode for crate::api::import::ImportChunk {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_points = <Vec<crate::api::import::ImportedPoint>>::sse_decode(deserializer);
+        let mut var_visits = <Vec<crate::api::import::ImportedVisit>>::sse_decode(deserializer);
+        let mut var_segments = <Vec<crate::api::import::ImportedSegment>>::sse_decode(deserializer);
+        return crate::api::import::ImportChunk {
+            points: var_points,
+            visits: var_visits,
+            segments: var_segments,
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportErrorKind {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::api::import::ImportErrorKind::EmptyExport,
+            1 => crate::api::import::ImportErrorKind::CorruptJson,
+            2 => crate::api::import::ImportErrorKind::UnrecognisedFormat,
+            3 => crate::api::import::ImportErrorKind::FileTooLarge,
+            4 => crate::api::import::ImportErrorKind::Io,
+            _ => unreachable!("Invalid variant for ImportErrorKind: {}", inner),
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportEvent {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut tag_ = <i32>::sse_decode(deserializer);
+        match tag_ {
+            0 => {
+                let mut var_field0 = <crate::api::import::ImportProgress>::sse_decode(deserializer);
+                return crate::api::import::ImportEvent::Progress(var_field0);
+            }
+            1 => {
+                let mut var_field0 = <crate::api::import::ImportChunk>::sse_decode(deserializer);
+                return crate::api::import::ImportEvent::Chunk(var_field0);
+            }
+            2 => {
+                let mut var_field0 =
+                    <crate::api::import::ImportSummaryOutput>::sse_decode(deserializer);
+                return crate::api::import::ImportEvent::Finished(var_field0);
+            }
+            3 => {
+                let mut var_field0 =
+                    <crate::api::import::ImportErrorKind>::sse_decode(deserializer);
+                return crate::api::import::ImportEvent::Failed(var_field0);
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+
+impl SseDecode for crate::api::import::ImportProgress {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_step = <crate::api::import::ImportStepKind>::sse_decode(deserializer);
+        let mut var_percent = <Option<f64>>::sse_decode(deserializer);
+        let mut var_records = <u32>::sse_decode(deserializer);
+        return crate::api::import::ImportProgress {
+            step: var_step,
+            percent: var_percent,
+            records: var_records,
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportStepKind {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::api::import::ImportStepKind::DetectingFormat,
+            1 => crate::api::import::ImportStepKind::ReadingRecords,
+            2 => crate::api::import::ImportStepKind::Done,
+            _ => unreachable!("Invalid variant for ImportStepKind: {}", inner),
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportSummaryOutput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_format = <String>::sse_decode(deserializer);
+        let mut var_periodStartUtc = <Option<i64>>::sse_decode(deserializer);
+        let mut var_periodEndUtc = <Option<i64>>::sse_decode(deserializer);
+        let mut var_pointCount = <u32>::sse_decode(deserializer);
+        let mut var_segmentCount = <u32>::sse_decode(deserializer);
+        let mut var_visitCount = <u32>::sse_decode(deserializer);
+        let mut var_skippedCount = <u32>::sse_decode(deserializer);
+        let mut var_bytesRead = <i64>::sse_decode(deserializer);
+        return crate::api::import::ImportSummaryOutput {
+            format: var_format,
+            period_start_utc: var_periodStartUtc,
+            period_end_utc: var_periodEndUtc,
+            point_count: var_pointCount,
+            segment_count: var_segmentCount,
+            visit_count: var_visitCount,
+            skipped_count: var_skippedCount,
+            bytes_read: var_bytesRead,
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportedPoint {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_timestampUtc = <i64>::sse_decode(deserializer);
+        let mut var_tzOffsetMinutes = <i32>::sse_decode(deserializer);
+        let mut var_lat = <f64>::sse_decode(deserializer);
+        let mut var_lon = <f64>::sse_decode(deserializer);
+        return crate::api::import::ImportedPoint {
+            timestamp_utc: var_timestampUtc,
+            tz_offset_minutes: var_tzOffsetMinutes,
+            lat: var_lat,
+            lon: var_lon,
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportedSegment {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_startTsUtc = <i64>::sse_decode(deserializer);
+        let mut var_startTzOffsetMinutes = <i32>::sse_decode(deserializer);
+        let mut var_endTsUtc = <i64>::sse_decode(deserializer);
+        let mut var_endTzOffsetMinutes = <i32>::sse_decode(deserializer);
+        let mut var_startLat = <f64>::sse_decode(deserializer);
+        let mut var_startLon = <f64>::sse_decode(deserializer);
+        let mut var_endLat = <f64>::sse_decode(deserializer);
+        let mut var_endLon = <f64>::sse_decode(deserializer);
+        let mut var_distanceM = <Option<f64>>::sse_decode(deserializer);
+        let mut var_detectedMode = <String>::sse_decode(deserializer);
+        return crate::api::import::ImportedSegment {
+            start_ts_utc: var_startTsUtc,
+            start_tz_offset_minutes: var_startTzOffsetMinutes,
+            end_ts_utc: var_endTsUtc,
+            end_tz_offset_minutes: var_endTzOffsetMinutes,
+            start_lat: var_startLat,
+            start_lon: var_startLon,
+            end_lat: var_endLat,
+            end_lon: var_endLon,
+            distance_m: var_distanceM,
+            detected_mode: var_detectedMode,
+        };
+    }
+}
+
+impl SseDecode for crate::api::import::ImportedVisit {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_arrivalTsUtc = <i64>::sse_decode(deserializer);
+        let mut var_arrivalTzOffsetMinutes = <i32>::sse_decode(deserializer);
+        let mut var_departureTsUtc = <i64>::sse_decode(deserializer);
+        let mut var_departureTzOffsetMinutes = <i32>::sse_decode(deserializer);
+        let mut var_lat = <f64>::sse_decode(deserializer);
+        let mut var_lon = <f64>::sse_decode(deserializer);
+        let mut var_radiusM = <Option<f64>>::sse_decode(deserializer);
+        let mut var_externalPlaceRef = <Option<String>>::sse_decode(deserializer);
+        return crate::api::import::ImportedVisit {
+            arrival_ts_utc: var_arrivalTsUtc,
+            arrival_tz_offset_minutes: var_arrivalTzOffsetMinutes,
+            departure_ts_utc: var_departureTsUtc,
+            departure_tz_offset_minutes: var_departureTzOffsetMinutes,
+            lat: var_lat,
+            lon: var_lon,
+            radius_m: var_radiusM,
+            external_place_ref: var_externalPlaceRef,
+        };
+    }
+}
+
 impl SseDecode for Vec<crate::api::timeline::BucketOutput> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -462,6 +731,48 @@ impl SseDecode for Vec<crate::api::timeline::HeatCellOutput> {
         let mut ans_ = Vec::with_capacity(len_ as usize);
         for idx_ in 0..len_ {
             ans_.push(<crate::api::timeline::HeatCellOutput>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::import::ImportedPoint> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::import::ImportedPoint>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::import::ImportedSegment> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::import::ImportedSegment>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::import::ImportedVisit> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::import::ImportedVisit>::sse_decode(
                 deserializer,
             ));
         }
@@ -1088,24 +1399,26 @@ fn pde_ffi_dispatcher_primary_impl(
             rust_vec_len,
             data_len,
         ),
-        3 => wire__crate__api__timeline__pipeline_request_default_impl(
+        3 => wire__crate__api__import__import_chunk_default_impl(port, ptr, rust_vec_len, data_len),
+        4 => wire__crate__api__import__import_timeline_impl(port, ptr, rust_vec_len, data_len),
+        5 => wire__crate__api__timeline__pipeline_request_default_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        4 => wire__crate__api__timeline__pipeline_response_default_impl(
+        6 => wire__crate__api__timeline__pipeline_response_default_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        5 => wire__crate__api__timeline__plan_video_impl(port, ptr, rust_vec_len, data_len),
-        6 => wire__crate__api__timeline__run_pipeline_impl(port, ptr, rust_vec_len, data_len),
-        7 => {
+        7 => wire__crate__api__timeline__plan_video_impl(port, ptr, rust_vec_len, data_len),
+        8 => wire__crate__api__timeline__run_pipeline_impl(port, ptr, rust_vec_len, data_len),
+        9 => {
             wire__crate__api__timeline__stats_output_default_impl(port, ptr, rust_vec_len, data_len)
         }
-        8 => wire__crate__api__timeline__video_plan_result_default_impl(
+        10 => wire__crate__api__timeline__video_plan_result_default_impl(
             port,
             ptr,
             rust_vec_len,
@@ -1219,6 +1532,237 @@ impl flutter_rust_bridge::IntoIntoDart<crate::api::timeline::HeatCellOutput>
     for crate::api::timeline::HeatCellOutput
 {
     fn into_into_dart(self) -> crate::api::timeline::HeatCellOutput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportChunk {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.points.into_into_dart().into_dart(),
+            self.visits.into_into_dart().into_dart(),
+            self.segments.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportChunk
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportChunk>
+    for crate::api::import::ImportChunk
+{
+    fn into_into_dart(self) -> crate::api::import::ImportChunk {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportErrorKind {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::EmptyExport => 0.into_dart(),
+            Self::CorruptJson => 1.into_dart(),
+            Self::UnrecognisedFormat => 2.into_dart(),
+            Self::FileTooLarge => 3.into_dart(),
+            Self::Io => 4.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportErrorKind
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportErrorKind>
+    for crate::api::import::ImportErrorKind
+{
+    fn into_into_dart(self) -> crate::api::import::ImportErrorKind {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportEvent {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            crate::api::import::ImportEvent::Progress(field0) => {
+                [0.into_dart(), field0.into_into_dart().into_dart()].into_dart()
+            }
+            crate::api::import::ImportEvent::Chunk(field0) => {
+                [1.into_dart(), field0.into_into_dart().into_dart()].into_dart()
+            }
+            crate::api::import::ImportEvent::Finished(field0) => {
+                [2.into_dart(), field0.into_into_dart().into_dart()].into_dart()
+            }
+            crate::api::import::ImportEvent::Failed(field0) => {
+                [3.into_dart(), field0.into_into_dart().into_dart()].into_dart()
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportEvent
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportEvent>
+    for crate::api::import::ImportEvent
+{
+    fn into_into_dart(self) -> crate::api::import::ImportEvent {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportProgress {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.step.into_into_dart().into_dart(),
+            self.percent.into_into_dart().into_dart(),
+            self.records.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportProgress
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportProgress>
+    for crate::api::import::ImportProgress
+{
+    fn into_into_dart(self) -> crate::api::import::ImportProgress {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportStepKind {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::DetectingFormat => 0.into_dart(),
+            Self::ReadingRecords => 1.into_dart(),
+            Self::Done => 2.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportStepKind
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportStepKind>
+    for crate::api::import::ImportStepKind
+{
+    fn into_into_dart(self) -> crate::api::import::ImportStepKind {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportSummaryOutput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.format.into_into_dart().into_dart(),
+            self.period_start_utc.into_into_dart().into_dart(),
+            self.period_end_utc.into_into_dart().into_dart(),
+            self.point_count.into_into_dart().into_dart(),
+            self.segment_count.into_into_dart().into_dart(),
+            self.visit_count.into_into_dart().into_dart(),
+            self.skipped_count.into_into_dart().into_dart(),
+            self.bytes_read.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportSummaryOutput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportSummaryOutput>
+    for crate::api::import::ImportSummaryOutput
+{
+    fn into_into_dart(self) -> crate::api::import::ImportSummaryOutput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportedPoint {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.timestamp_utc.into_into_dart().into_dart(),
+            self.tz_offset_minutes.into_into_dart().into_dart(),
+            self.lat.into_into_dart().into_dart(),
+            self.lon.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportedPoint
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportedPoint>
+    for crate::api::import::ImportedPoint
+{
+    fn into_into_dart(self) -> crate::api::import::ImportedPoint {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportedSegment {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.start_ts_utc.into_into_dart().into_dart(),
+            self.start_tz_offset_minutes.into_into_dart().into_dart(),
+            self.end_ts_utc.into_into_dart().into_dart(),
+            self.end_tz_offset_minutes.into_into_dart().into_dart(),
+            self.start_lat.into_into_dart().into_dart(),
+            self.start_lon.into_into_dart().into_dart(),
+            self.end_lat.into_into_dart().into_dart(),
+            self.end_lon.into_into_dart().into_dart(),
+            self.distance_m.into_into_dart().into_dart(),
+            self.detected_mode.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportedSegment
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportedSegment>
+    for crate::api::import::ImportedSegment
+{
+    fn into_into_dart(self) -> crate::api::import::ImportedSegment {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::import::ImportedVisit {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.arrival_ts_utc.into_into_dart().into_dart(),
+            self.arrival_tz_offset_minutes.into_into_dart().into_dart(),
+            self.departure_ts_utc.into_into_dart().into_dart(),
+            self.departure_tz_offset_minutes
+                .into_into_dart()
+                .into_dart(),
+            self.lat.into_into_dart().into_dart(),
+            self.lon.into_into_dart().into_dart(),
+            self.radius_m.into_into_dart().into_dart(),
+            self.external_place_ref.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::import::ImportedVisit
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::import::ImportedVisit>
+    for crate::api::import::ImportedVisit
+{
+    fn into_into_dart(self) -> crate::api::import::ImportedVisit {
         self
     }
 }
@@ -1683,6 +2227,22 @@ impl flutter_rust_bridge::IntoIntoDart<crate::api::timeline::VisitInput>
     }
 }
 
+impl SseEncode for flutter_rust_bridge::for_generated::anyhow::Error {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(format!("{:?}", self), serializer);
+    }
+}
+
+impl SseEncode
+    for StreamSink<crate::api::import::ImportEvent, flutter_rust_bridge::for_generated::SseCodec>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        unimplemented!("")
+    }
+}
+
 impl SseEncode for String {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -1759,6 +2319,141 @@ impl SseEncode for i64 {
     }
 }
 
+impl SseEncode for crate::api::import::ImportChunk {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Vec<crate::api::import::ImportedPoint>>::sse_encode(self.points, serializer);
+        <Vec<crate::api::import::ImportedVisit>>::sse_encode(self.visits, serializer);
+        <Vec<crate::api::import::ImportedSegment>>::sse_encode(self.segments, serializer);
+    }
+}
+
+impl SseEncode for crate::api::import::ImportErrorKind {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::api::import::ImportErrorKind::EmptyExport => 0,
+                crate::api::import::ImportErrorKind::CorruptJson => 1,
+                crate::api::import::ImportErrorKind::UnrecognisedFormat => 2,
+                crate::api::import::ImportErrorKind::FileTooLarge => 3,
+                crate::api::import::ImportErrorKind::Io => 4,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
+impl SseEncode for crate::api::import::ImportEvent {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        match self {
+            crate::api::import::ImportEvent::Progress(field0) => {
+                <i32>::sse_encode(0, serializer);
+                <crate::api::import::ImportProgress>::sse_encode(field0, serializer);
+            }
+            crate::api::import::ImportEvent::Chunk(field0) => {
+                <i32>::sse_encode(1, serializer);
+                <crate::api::import::ImportChunk>::sse_encode(field0, serializer);
+            }
+            crate::api::import::ImportEvent::Finished(field0) => {
+                <i32>::sse_encode(2, serializer);
+                <crate::api::import::ImportSummaryOutput>::sse_encode(field0, serializer);
+            }
+            crate::api::import::ImportEvent::Failed(field0) => {
+                <i32>::sse_encode(3, serializer);
+                <crate::api::import::ImportErrorKind>::sse_encode(field0, serializer);
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+
+impl SseEncode for crate::api::import::ImportProgress {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <crate::api::import::ImportStepKind>::sse_encode(self.step, serializer);
+        <Option<f64>>::sse_encode(self.percent, serializer);
+        <u32>::sse_encode(self.records, serializer);
+    }
+}
+
+impl SseEncode for crate::api::import::ImportStepKind {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::api::import::ImportStepKind::DetectingFormat => 0,
+                crate::api::import::ImportStepKind::ReadingRecords => 1,
+                crate::api::import::ImportStepKind::Done => 2,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
+impl SseEncode for crate::api::import::ImportSummaryOutput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.format, serializer);
+        <Option<i64>>::sse_encode(self.period_start_utc, serializer);
+        <Option<i64>>::sse_encode(self.period_end_utc, serializer);
+        <u32>::sse_encode(self.point_count, serializer);
+        <u32>::sse_encode(self.segment_count, serializer);
+        <u32>::sse_encode(self.visit_count, serializer);
+        <u32>::sse_encode(self.skipped_count, serializer);
+        <i64>::sse_encode(self.bytes_read, serializer);
+    }
+}
+
+impl SseEncode for crate::api::import::ImportedPoint {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i64>::sse_encode(self.timestamp_utc, serializer);
+        <i32>::sse_encode(self.tz_offset_minutes, serializer);
+        <f64>::sse_encode(self.lat, serializer);
+        <f64>::sse_encode(self.lon, serializer);
+    }
+}
+
+impl SseEncode for crate::api::import::ImportedSegment {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i64>::sse_encode(self.start_ts_utc, serializer);
+        <i32>::sse_encode(self.start_tz_offset_minutes, serializer);
+        <i64>::sse_encode(self.end_ts_utc, serializer);
+        <i32>::sse_encode(self.end_tz_offset_minutes, serializer);
+        <f64>::sse_encode(self.start_lat, serializer);
+        <f64>::sse_encode(self.start_lon, serializer);
+        <f64>::sse_encode(self.end_lat, serializer);
+        <f64>::sse_encode(self.end_lon, serializer);
+        <Option<f64>>::sse_encode(self.distance_m, serializer);
+        <String>::sse_encode(self.detected_mode, serializer);
+    }
+}
+
+impl SseEncode for crate::api::import::ImportedVisit {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i64>::sse_encode(self.arrival_ts_utc, serializer);
+        <i32>::sse_encode(self.arrival_tz_offset_minutes, serializer);
+        <i64>::sse_encode(self.departure_ts_utc, serializer);
+        <i32>::sse_encode(self.departure_tz_offset_minutes, serializer);
+        <f64>::sse_encode(self.lat, serializer);
+        <f64>::sse_encode(self.lon, serializer);
+        <Option<f64>>::sse_encode(self.radius_m, serializer);
+        <Option<String>>::sse_encode(self.external_place_ref, serializer);
+    }
+}
+
 impl SseEncode for Vec<crate::api::timeline::BucketOutput> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -1785,6 +2480,36 @@ impl SseEncode for Vec<crate::api::timeline::HeatCellOutput> {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <crate::api::timeline::HeatCellOutput>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::import::ImportedPoint> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::import::ImportedPoint>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::import::ImportedSegment> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::import::ImportedSegment>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::import::ImportedVisit> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::import::ImportedVisit>::sse_encode(item, serializer);
         }
     }
 }
@@ -2243,7 +2968,7 @@ mod io {
     use flutter_rust_bridge::for_generated::byteorder::{
         NativeEndian, ReadBytesExt, WriteBytesExt,
     };
-    use flutter_rust_bridge::for_generated::{transform_result_dco, Lifetimeable, Lockable};
+    use flutter_rust_bridge::for_generated::{Lifetimeable, Lockable, transform_result_dco};
     use flutter_rust_bridge::{Handler, IntoIntoDart};
 
     // Section: boilerplate
@@ -2267,7 +2992,7 @@ mod web {
     };
     use flutter_rust_bridge::for_generated::wasm_bindgen;
     use flutter_rust_bridge::for_generated::wasm_bindgen::prelude::*;
-    use flutter_rust_bridge::for_generated::{transform_result_dco, Lifetimeable, Lockable};
+    use flutter_rust_bridge::for_generated::{Lifetimeable, Lockable, transform_result_dco};
     use flutter_rust_bridge::{Handler, IntoIntoDart};
 
     // Section: boilerplate

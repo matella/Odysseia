@@ -51,6 +51,8 @@ class StoryView extends StatelessWidget {
     required this.granularity,
     required this.periodLabel,
     this.onGranularityChanged,
+    this.onPrevious,
+    this.onNext,
     this.privateZonesActive = false,
   });
 
@@ -68,6 +70,12 @@ class StoryView extends StatelessWidget {
 
   /// Changement de granularité.
   final ValueChanged<StoryGranularity>? onGranularityChanged;
+
+  /// Période précédente (§3.3).
+  final VoidCallback? onPrevious;
+
+  /// Période suivante.
+  final VoidCallback? onNext;
 
   /// L'utilisateur a-t-il des zones privées actives ? (§3.7)
   final bool privateZonesActive;
@@ -87,6 +95,8 @@ class StoryView extends StatelessWidget {
           granularity: granularity,
           periodLabel: periodLabel,
           onGranularityChanged: onGranularityChanged,
+          onPrevious: onPrevious,
+          onNext: onNext,
         ),
         if (privateZonesActive) _PrivateZoneNotice(message: l10n.privateZoneHidden),
         Expanded(
@@ -114,11 +124,15 @@ class _Header extends StatelessWidget {
     required this.granularity,
     required this.periodLabel,
     required this.onGranularityChanged,
+    required this.onPrevious,
+    required this.onNext,
   });
 
   final StoryGranularity granularity;
   final String periodLabel;
   final ValueChanged<StoryGranularity>? onGranularityChanged;
+  final VoidCallback? onPrevious;
+  final VoidCallback? onNext;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +149,27 @@ class _Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(periodLabel, style: Theme.of(context).textTheme.titleLarge),
+          Row(
+            children: [
+              IconButton(
+                onPressed: onPrevious,
+                icon: const Icon(Icons.chevron_left),
+                tooltip: l10n.granularityDay,
+              ),
+              Expanded(
+                child: Text(
+                  periodLabel,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              IconButton(
+                onPressed: onNext,
+                icon: const Icon(Icons.chevron_right),
+                tooltip: l10n.granularityDay,
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
           // Défilement horizontal : les libellés français sont plus longs
           // que les anglais et faisaient passer « Semaine » sur deux lignes

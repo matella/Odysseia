@@ -5,8 +5,13 @@
 // donnée absente ici est une donnée que le pipeline a écartée — c'est le
 // contrat, et c'est ce qui permet de tester le rendu sans rejouer §5.4.
 
+import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:odysseia/bridge/generated/api/timeline.dart';
+import 'package:odysseia/bridge/generated/api/import.dart';
+import 'package:odysseia/data/import_service.dart';
+import 'package:odysseia/features/import/import_view.dart';
+import 'package:odysseia/features/settings/settings_view.dart';
 import 'package:odysseia/features/stats/stats_view.dart';
 import 'package:odysseia/features/story/story_view.dart';
 import 'package:odysseia/features/video/video_view.dart';
@@ -253,6 +258,80 @@ void main() {
           fps: 0,
           frames: const [],
         ),
+      ),
+    );
+  });
+
+  group('Import (§3.3)', () {
+    goldenTest(
+      'au repos, sans sélecteur de fichier',
+      name: 'import_idle',
+      () => const ImportView(state: ImportIdle(), pickerAvailable: false),
+    );
+
+    goldenTest(
+      'lecture en cours',
+      name: 'import_running',
+      () => const ImportView(
+        state: ImportRunning(
+          step: ImportStepKind.readingRecords,
+          percent: 42,
+          records: 128400,
+        ),
+      ),
+    );
+
+    goldenTest(
+      'terminé, avec rejets et export plus court',
+      name: 'import_done_warning',
+      () => ImportView(
+        // §4 : l'avertissement de période plus courte, et §3.10 : les rejets
+        // sont montrés, jamais tus.
+        state: ImportDone(
+          shorterThanPrevious: true,
+          summary: ImportSummaryOutput(
+            format: 'google_direct_array',
+            periodStartUtc: PlatformInt64Util.from(1710486720000),
+            periodEndUtc: PlatformInt64Util.from(1710493440000),
+            pointCount: 482013,
+            segmentCount: 4321,
+            visitCount: 2480,
+            skippedCount: 17,
+            bytesRead: PlatformInt64Util.from(268435456),
+          ),
+        ),
+      ),
+    );
+
+    goldenTest(
+      'échec — un cas, un message',
+      name: 'import_failed',
+      () => const ImportView(state: ImportFailed(ImportErrorKind.corruptJson)),
+    );
+  });
+
+  group('Réglages (§2, §3.7)', () {
+    goldenTest(
+      'capacités et intégrations',
+      name: 'settings_full',
+      () => SettingsView(
+        capabilities: [
+          const Capability(
+            label: 'Local database',
+            status: CapabilityStatus.available,
+          ),
+          const Capability(
+            label: 'Compute core',
+            status: CapabilityStatus.available,
+          ),
+          const Capability(
+            label: 'Video export',
+            status: CapabilityStatus.notWired,
+          ),
+        ],
+        onIntegrationsChanged: (_) {},
+        onExport: () {},
+        onDelete: () {},
       ),
     );
   });

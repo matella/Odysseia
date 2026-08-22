@@ -3,6 +3,7 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
+import 'api/import.dart';
 import 'api/timeline.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -64,7 +65,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.12.0';
 
   @override
-  int get rustContentHash => 1406327045;
+  int get rustContentHash => -716907300;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -82,6 +83,13 @@ abstract class RustLibApi extends BaseApi {
   });
 
   Future<FiltersInput> crateApiTimelineFiltersInputDefault();
+
+  Future<ImportChunk> crateApiImportImportChunkDefault();
+
+  Stream<ImportEvent> crateApiImportImportTimeline({
+    required String path,
+    PlatformInt64? maxBytes,
+  });
 
   Future<PipelineRequest> crateApiTimelinePipelineRequestDefault();
 
@@ -172,7 +180,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       const TaskConstMeta(debugName: "filters_input_default", argNames: []);
 
   @override
-  Future<PipelineRequest> crateApiTimelinePipelineRequestDefault() {
+  Future<ImportChunk> crateApiImportImportChunkDefault() {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
@@ -181,6 +189,73 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             generalizedFrbRustBinding,
             serializer,
             funcId: 3,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_import_chunk,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiImportImportChunkDefaultConstMeta,
+        argValues: [],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiImportImportChunkDefaultConstMeta =>
+      const TaskConstMeta(debugName: "import_chunk_default", argNames: []);
+
+  @override
+  Stream<ImportEvent> crateApiImportImportTimeline({
+    required String path,
+    PlatformInt64? maxBytes,
+  }) {
+    final sink = RustStreamSink<ImportEvent>();
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_String(path, serializer);
+            sse_encode_opt_box_autoadd_i_64(maxBytes, serializer);
+            sse_encode_StreamSink_import_event_Sse(sink, serializer);
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 4,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: null,
+          ),
+          constMeta: kCrateApiImportImportTimelineConstMeta,
+          argValues: [path, maxBytes, sink],
+          apiImpl: this,
+        ),
+      ),
+    );
+    return sink.stream;
+  }
+
+  TaskConstMeta get kCrateApiImportImportTimelineConstMeta =>
+      const TaskConstMeta(
+        debugName: "import_timeline",
+        argNames: ["path", "maxBytes", "sink"],
+      );
+
+  @override
+  Future<PipelineRequest> crateApiTimelinePipelineRequestDefault() {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 5,
             port: port_,
           );
         },
@@ -207,7 +282,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 4,
+            funcId: 6,
             port: port_,
           );
         },
@@ -239,7 +314,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 5,
+            funcId: 7,
             port: port_,
           );
         },
@@ -271,7 +346,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 6,
+            funcId: 8,
             port: port_,
           );
         },
@@ -298,7 +373,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 7,
+            funcId: 9,
             port: port_,
           );
         },
@@ -325,7 +400,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 8,
+            funcId: 10,
             port: port_,
           );
         },
@@ -342,6 +417,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiTimelineVideoPlanResultDefaultConstMeta =>
       const TaskConstMeta(debugName: "video_plan_result_default", argNames: []);
+
+  @protected
+  AnyhowException dco_decode_AnyhowException(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return AnyhowException(raw as String);
+  }
+
+  @protected
+  RustStreamSink<ImportEvent> dco_decode_StreamSink_import_event_Sse(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    throw UnimplementedError();
+  }
 
   @protected
   String dco_decode_String(dynamic raw) {
@@ -365,6 +454,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   PlatformInt64 dco_decode_box_autoadd_i_64(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_i_64(raw);
+  }
+
+  @protected
+  ImportChunk dco_decode_box_autoadd_import_chunk(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_import_chunk(raw);
+  }
+
+  @protected
+  ImportProgress dco_decode_box_autoadd_import_progress(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_import_progress(raw);
+  }
+
+  @protected
+  ImportSummaryOutput dco_decode_box_autoadd_import_summary_output(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_import_summary_output(raw);
   }
 
   @protected
@@ -461,6 +570,135 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ImportChunk dco_decode_import_chunk(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return ImportChunk(
+      points: dco_decode_list_imported_point(arr[0]),
+      visits: dco_decode_list_imported_visit(arr[1]),
+      segments: dco_decode_list_imported_segment(arr[2]),
+    );
+  }
+
+  @protected
+  ImportErrorKind dco_decode_import_error_kind(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return ImportErrorKind.values[raw as int];
+  }
+
+  @protected
+  ImportEvent dco_decode_import_event(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    switch (raw[0]) {
+      case 0:
+        return ImportEvent_Progress(
+          dco_decode_box_autoadd_import_progress(raw[1]),
+        );
+      case 1:
+        return ImportEvent_Chunk(dco_decode_box_autoadd_import_chunk(raw[1]));
+      case 2:
+        return ImportEvent_Finished(
+          dco_decode_box_autoadd_import_summary_output(raw[1]),
+        );
+      case 3:
+        return ImportEvent_Failed(dco_decode_import_error_kind(raw[1]));
+      default:
+        throw Exception("unreachable");
+    }
+  }
+
+  @protected
+  ImportProgress dco_decode_import_progress(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return ImportProgress(
+      step: dco_decode_import_step_kind(arr[0]),
+      percent: dco_decode_opt_box_autoadd_f_64(arr[1]),
+      records: dco_decode_u_32(arr[2]),
+    );
+  }
+
+  @protected
+  ImportStepKind dco_decode_import_step_kind(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return ImportStepKind.values[raw as int];
+  }
+
+  @protected
+  ImportSummaryOutput dco_decode_import_summary_output(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 8)
+      throw Exception('unexpected arr length: expect 8 but see ${arr.length}');
+    return ImportSummaryOutput(
+      format: dco_decode_String(arr[0]),
+      periodStartUtc: dco_decode_opt_box_autoadd_i_64(arr[1]),
+      periodEndUtc: dco_decode_opt_box_autoadd_i_64(arr[2]),
+      pointCount: dco_decode_u_32(arr[3]),
+      segmentCount: dco_decode_u_32(arr[4]),
+      visitCount: dco_decode_u_32(arr[5]),
+      skippedCount: dco_decode_u_32(arr[6]),
+      bytesRead: dco_decode_i_64(arr[7]),
+    );
+  }
+
+  @protected
+  ImportedPoint dco_decode_imported_point(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 4)
+      throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+    return ImportedPoint(
+      timestampUtc: dco_decode_i_64(arr[0]),
+      tzOffsetMinutes: dco_decode_i_32(arr[1]),
+      lat: dco_decode_f_64(arr[2]),
+      lon: dco_decode_f_64(arr[3]),
+    );
+  }
+
+  @protected
+  ImportedSegment dco_decode_imported_segment(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 10)
+      throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
+    return ImportedSegment(
+      startTsUtc: dco_decode_i_64(arr[0]),
+      startTzOffsetMinutes: dco_decode_i_32(arr[1]),
+      endTsUtc: dco_decode_i_64(arr[2]),
+      endTzOffsetMinutes: dco_decode_i_32(arr[3]),
+      startLat: dco_decode_f_64(arr[4]),
+      startLon: dco_decode_f_64(arr[5]),
+      endLat: dco_decode_f_64(arr[6]),
+      endLon: dco_decode_f_64(arr[7]),
+      distanceM: dco_decode_opt_box_autoadd_f_64(arr[8]),
+      detectedMode: dco_decode_String(arr[9]),
+    );
+  }
+
+  @protected
+  ImportedVisit dco_decode_imported_visit(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 8)
+      throw Exception('unexpected arr length: expect 8 but see ${arr.length}');
+    return ImportedVisit(
+      arrivalTsUtc: dco_decode_i_64(arr[0]),
+      arrivalTzOffsetMinutes: dco_decode_i_32(arr[1]),
+      departureTsUtc: dco_decode_i_64(arr[2]),
+      departureTzOffsetMinutes: dco_decode_i_32(arr[3]),
+      lat: dco_decode_f_64(arr[4]),
+      lon: dco_decode_f_64(arr[5]),
+      radiusM: dco_decode_opt_box_autoadd_f_64(arr[6]),
+      externalPlaceRef: dco_decode_opt_String(arr[7]),
+    );
+  }
+
+  @protected
   List<BucketOutput> dco_decode_list_bucket_output(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return (raw as List<dynamic>).map(dco_decode_bucket_output).toList();
@@ -476,6 +714,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   List<HeatCellOutput> dco_decode_list_heat_cell_output(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return (raw as List<dynamic>).map(dco_decode_heat_cell_output).toList();
+  }
+
+  @protected
+  List<ImportedPoint> dco_decode_list_imported_point(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_imported_point).toList();
+  }
+
+  @protected
+  List<ImportedSegment> dco_decode_list_imported_segment(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_imported_segment).toList();
+  }
+
+  @protected
+  List<ImportedVisit> dco_decode_list_imported_visit(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_imported_visit).toList();
   }
 
   @protected
@@ -870,6 +1126,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_String(deserializer);
+    return AnyhowException(inner);
+  }
+
+  @protected
+  RustStreamSink<ImportEvent> sse_decode_StreamSink_import_event_Sse(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    throw UnimplementedError('Unreachable ()');
+  }
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_list_prim_u_8_strict(deserializer);
@@ -892,6 +1163,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   PlatformInt64 sse_decode_box_autoadd_i_64(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_i_64(deserializer));
+  }
+
+  @protected
+  ImportChunk sse_decode_box_autoadd_import_chunk(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_import_chunk(deserializer));
+  }
+
+  @protected
+  ImportProgress sse_decode_box_autoadd_import_progress(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_import_progress(deserializer));
+  }
+
+  @protected
+  ImportSummaryOutput sse_decode_box_autoadd_import_summary_output(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_import_summary_output(deserializer));
   }
 
   @protected
@@ -995,6 +1290,161 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ImportChunk sse_decode_import_chunk(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_points = sse_decode_list_imported_point(deserializer);
+    var var_visits = sse_decode_list_imported_visit(deserializer);
+    var var_segments = sse_decode_list_imported_segment(deserializer);
+    return ImportChunk(
+      points: var_points,
+      visits: var_visits,
+      segments: var_segments,
+    );
+  }
+
+  @protected
+  ImportErrorKind sse_decode_import_error_kind(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return ImportErrorKind.values[inner];
+  }
+
+  @protected
+  ImportEvent sse_decode_import_event(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var tag_ = sse_decode_i_32(deserializer);
+    switch (tag_) {
+      case 0:
+        var var_field0 = sse_decode_box_autoadd_import_progress(deserializer);
+        return ImportEvent_Progress(var_field0);
+      case 1:
+        var var_field0 = sse_decode_box_autoadd_import_chunk(deserializer);
+        return ImportEvent_Chunk(var_field0);
+      case 2:
+        var var_field0 = sse_decode_box_autoadd_import_summary_output(
+          deserializer,
+        );
+        return ImportEvent_Finished(var_field0);
+      case 3:
+        var var_field0 = sse_decode_import_error_kind(deserializer);
+        return ImportEvent_Failed(var_field0);
+      default:
+        throw UnimplementedError('');
+    }
+  }
+
+  @protected
+  ImportProgress sse_decode_import_progress(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_step = sse_decode_import_step_kind(deserializer);
+    var var_percent = sse_decode_opt_box_autoadd_f_64(deserializer);
+    var var_records = sse_decode_u_32(deserializer);
+    return ImportProgress(
+      step: var_step,
+      percent: var_percent,
+      records: var_records,
+    );
+  }
+
+  @protected
+  ImportStepKind sse_decode_import_step_kind(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return ImportStepKind.values[inner];
+  }
+
+  @protected
+  ImportSummaryOutput sse_decode_import_summary_output(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_format = sse_decode_String(deserializer);
+    var var_periodStartUtc = sse_decode_opt_box_autoadd_i_64(deserializer);
+    var var_periodEndUtc = sse_decode_opt_box_autoadd_i_64(deserializer);
+    var var_pointCount = sse_decode_u_32(deserializer);
+    var var_segmentCount = sse_decode_u_32(deserializer);
+    var var_visitCount = sse_decode_u_32(deserializer);
+    var var_skippedCount = sse_decode_u_32(deserializer);
+    var var_bytesRead = sse_decode_i_64(deserializer);
+    return ImportSummaryOutput(
+      format: var_format,
+      periodStartUtc: var_periodStartUtc,
+      periodEndUtc: var_periodEndUtc,
+      pointCount: var_pointCount,
+      segmentCount: var_segmentCount,
+      visitCount: var_visitCount,
+      skippedCount: var_skippedCount,
+      bytesRead: var_bytesRead,
+    );
+  }
+
+  @protected
+  ImportedPoint sse_decode_imported_point(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_timestampUtc = sse_decode_i_64(deserializer);
+    var var_tzOffsetMinutes = sse_decode_i_32(deserializer);
+    var var_lat = sse_decode_f_64(deserializer);
+    var var_lon = sse_decode_f_64(deserializer);
+    return ImportedPoint(
+      timestampUtc: var_timestampUtc,
+      tzOffsetMinutes: var_tzOffsetMinutes,
+      lat: var_lat,
+      lon: var_lon,
+    );
+  }
+
+  @protected
+  ImportedSegment sse_decode_imported_segment(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_startTsUtc = sse_decode_i_64(deserializer);
+    var var_startTzOffsetMinutes = sse_decode_i_32(deserializer);
+    var var_endTsUtc = sse_decode_i_64(deserializer);
+    var var_endTzOffsetMinutes = sse_decode_i_32(deserializer);
+    var var_startLat = sse_decode_f_64(deserializer);
+    var var_startLon = sse_decode_f_64(deserializer);
+    var var_endLat = sse_decode_f_64(deserializer);
+    var var_endLon = sse_decode_f_64(deserializer);
+    var var_distanceM = sse_decode_opt_box_autoadd_f_64(deserializer);
+    var var_detectedMode = sse_decode_String(deserializer);
+    return ImportedSegment(
+      startTsUtc: var_startTsUtc,
+      startTzOffsetMinutes: var_startTzOffsetMinutes,
+      endTsUtc: var_endTsUtc,
+      endTzOffsetMinutes: var_endTzOffsetMinutes,
+      startLat: var_startLat,
+      startLon: var_startLon,
+      endLat: var_endLat,
+      endLon: var_endLon,
+      distanceM: var_distanceM,
+      detectedMode: var_detectedMode,
+    );
+  }
+
+  @protected
+  ImportedVisit sse_decode_imported_visit(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_arrivalTsUtc = sse_decode_i_64(deserializer);
+    var var_arrivalTzOffsetMinutes = sse_decode_i_32(deserializer);
+    var var_departureTsUtc = sse_decode_i_64(deserializer);
+    var var_departureTzOffsetMinutes = sse_decode_i_32(deserializer);
+    var var_lat = sse_decode_f_64(deserializer);
+    var var_lon = sse_decode_f_64(deserializer);
+    var var_radiusM = sse_decode_opt_box_autoadd_f_64(deserializer);
+    var var_externalPlaceRef = sse_decode_opt_String(deserializer);
+    return ImportedVisit(
+      arrivalTsUtc: var_arrivalTsUtc,
+      arrivalTzOffsetMinutes: var_arrivalTzOffsetMinutes,
+      departureTsUtc: var_departureTsUtc,
+      departureTzOffsetMinutes: var_departureTzOffsetMinutes,
+      lat: var_lat,
+      lon: var_lon,
+      radiusM: var_radiusM,
+      externalPlaceRef: var_externalPlaceRef,
+    );
+  }
+
+  @protected
   List<BucketOutput> sse_decode_list_bucket_output(
     SseDeserializer deserializer,
   ) {
@@ -1030,6 +1480,48 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var ans_ = <HeatCellOutput>[];
     for (var idx_ = 0; idx_ < len_; ++idx_) {
       ans_.add(sse_decode_heat_cell_output(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<ImportedPoint> sse_decode_list_imported_point(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <ImportedPoint>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_imported_point(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<ImportedSegment> sse_decode_list_imported_segment(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <ImportedSegment>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_imported_segment(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<ImportedVisit> sse_decode_list_imported_visit(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <ImportedVisit>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_imported_visit(deserializer));
     }
     return ans_;
   }
@@ -1575,6 +2067,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_AnyhowException(
+    AnyhowException self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.message, serializer);
+  }
+
+  @protected
+  void sse_encode_StreamSink_import_event_Sse(
+    RustStreamSink<ImportEvent> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(
+      self.setupAndSerialize(
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_import_event,
+          decodeErrorData: sse_decode_AnyhowException,
+        ),
+      ),
+      serializer,
+    );
+  }
+
+  @protected
   void sse_encode_String(String self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
@@ -1599,6 +2117,33 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_64(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_import_chunk(
+    ImportChunk self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_import_chunk(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_import_progress(
+    ImportProgress self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_import_progress(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_import_summary_output(
+    ImportSummaryOutput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_import_summary_output(self, serializer);
   }
 
   @protected
@@ -1687,6 +2232,118 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_import_chunk(ImportChunk self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_imported_point(self.points, serializer);
+    sse_encode_list_imported_visit(self.visits, serializer);
+    sse_encode_list_imported_segment(self.segments, serializer);
+  }
+
+  @protected
+  void sse_encode_import_error_kind(
+    ImportErrorKind self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
+  void sse_encode_import_event(ImportEvent self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    switch (self) {
+      case ImportEvent_Progress(field0: final field0):
+        sse_encode_i_32(0, serializer);
+        sse_encode_box_autoadd_import_progress(field0, serializer);
+      case ImportEvent_Chunk(field0: final field0):
+        sse_encode_i_32(1, serializer);
+        sse_encode_box_autoadd_import_chunk(field0, serializer);
+      case ImportEvent_Finished(field0: final field0):
+        sse_encode_i_32(2, serializer);
+        sse_encode_box_autoadd_import_summary_output(field0, serializer);
+      case ImportEvent_Failed(field0: final field0):
+        sse_encode_i_32(3, serializer);
+        sse_encode_import_error_kind(field0, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_import_progress(
+    ImportProgress self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_import_step_kind(self.step, serializer);
+    sse_encode_opt_box_autoadd_f_64(self.percent, serializer);
+    sse_encode_u_32(self.records, serializer);
+  }
+
+  @protected
+  void sse_encode_import_step_kind(
+    ImportStepKind self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
+  void sse_encode_import_summary_output(
+    ImportSummaryOutput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.format, serializer);
+    sse_encode_opt_box_autoadd_i_64(self.periodStartUtc, serializer);
+    sse_encode_opt_box_autoadd_i_64(self.periodEndUtc, serializer);
+    sse_encode_u_32(self.pointCount, serializer);
+    sse_encode_u_32(self.segmentCount, serializer);
+    sse_encode_u_32(self.visitCount, serializer);
+    sse_encode_u_32(self.skippedCount, serializer);
+    sse_encode_i_64(self.bytesRead, serializer);
+  }
+
+  @protected
+  void sse_encode_imported_point(ImportedPoint self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_64(self.timestampUtc, serializer);
+    sse_encode_i_32(self.tzOffsetMinutes, serializer);
+    sse_encode_f_64(self.lat, serializer);
+    sse_encode_f_64(self.lon, serializer);
+  }
+
+  @protected
+  void sse_encode_imported_segment(
+    ImportedSegment self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_64(self.startTsUtc, serializer);
+    sse_encode_i_32(self.startTzOffsetMinutes, serializer);
+    sse_encode_i_64(self.endTsUtc, serializer);
+    sse_encode_i_32(self.endTzOffsetMinutes, serializer);
+    sse_encode_f_64(self.startLat, serializer);
+    sse_encode_f_64(self.startLon, serializer);
+    sse_encode_f_64(self.endLat, serializer);
+    sse_encode_f_64(self.endLon, serializer);
+    sse_encode_opt_box_autoadd_f_64(self.distanceM, serializer);
+    sse_encode_String(self.detectedMode, serializer);
+  }
+
+  @protected
+  void sse_encode_imported_visit(ImportedVisit self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_64(self.arrivalTsUtc, serializer);
+    sse_encode_i_32(self.arrivalTzOffsetMinutes, serializer);
+    sse_encode_i_64(self.departureTsUtc, serializer);
+    sse_encode_i_32(self.departureTzOffsetMinutes, serializer);
+    sse_encode_f_64(self.lat, serializer);
+    sse_encode_f_64(self.lon, serializer);
+    sse_encode_opt_box_autoadd_f_64(self.radiusM, serializer);
+    sse_encode_opt_String(self.externalPlaceRef, serializer);
+  }
+
+  @protected
   void sse_encode_list_bucket_output(
     List<BucketOutput> self,
     SseSerializer serializer,
@@ -1719,6 +2376,42 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
       sse_encode_heat_cell_output(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_imported_point(
+    List<ImportedPoint> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_imported_point(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_imported_segment(
+    List<ImportedSegment> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_imported_segment(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_imported_visit(
+    List<ImportedVisit> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_imported_visit(item, serializer);
     }
   }
 

@@ -37,5 +37,18 @@ Versioning: [Semantic Versioning](https://semver.org/).
 - Plan de frames §3.5 dans `core/src/render/` : déterministe, sans encodeur.
 - Les trois vues (§3.3–3.5) et leur navigation, alimentées par
   `TimelineRepository` — seul chemin vers les données.
-- Internationalisation anglais + français (§3.9) et 18 golden tests, une
+- Internationalisation anglais + français (§3.9) et 28 golden tests, une
   image par vue **et par locale** (§3.10).
+- Import de bout en bout (§3.1, §4) : le parseur Rust pousse des lots par
+  `StreamSink`, Dart les insère par transactions groupées. Le fichier n'est
+  chargé en entier d'aucun côté. Un import raté laisse l'import précédent
+  intact.
+- Écran d'import (§3.3) : progression, avertissement de remplacement, alerte
+  si le nouvel export couvre une période plus courte (§4), un message par
+  cause d'échec (§3.10).
+- Écran Réglages (§2, §3.7) : capacités de la plateforme affichées plutôt que
+  masquées, intégrations optionnelles désactivées par défaut avec le détail de
+  ce que chacune transmet, suppression totale des données locales.
+- Les vues sont branchées au dépôt : navigation par période, filtres, et
+  rechargement depuis le pipeline à chaque changement.
+- `docs/privacy.md` rédigée (§3.7).

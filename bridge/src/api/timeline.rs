@@ -26,7 +26,7 @@ use timeline_core::model::{
 };
 use timeline_core::pipeline::places::{NoPlaceLookup, PlaceSource};
 use timeline_core::pipeline::{
-    Period as CorePeriod, PlaceFilter as CorePlaceFilter, Pipeline, ViewFilters,
+    Period as CorePeriod, Pipeline, PlaceFilter as CorePlaceFilter, ViewFilters,
 };
 use timeline_core::render::{
     self, RenderError, RenderParams as CoreRenderParams, VisualStyle as CoreVisualStyle,
@@ -401,11 +401,9 @@ fn to_core_place(input: &UserPlaceInput) -> CoreUserPlace {
 
 fn to_core_zone(input: &PrivateZoneInput) -> CorePrivateZone {
     let shape = match (input.lat, input.lon, input.radius_m) {
-        (Some(lat), Some(lon), Some(radius_m)) if input.polygon.is_empty() => ZoneShape::Circle {
-            lat,
-            lon,
-            radius_m,
-        },
+        (Some(lat), Some(lon), Some(radius_m)) if input.polygon.is_empty() => {
+            ZoneShape::Circle { lat, lon, radius_m }
+        }
         _ => ZoneShape::Polygon {
             // `as_chunks` plutôt que `chunks_exact(2)` : la taille est
             // constante, le compilateur en tire un tableau de taille connue.
@@ -457,7 +455,9 @@ fn to_core_filters(input: &FiltersInput) -> ViewFilters {
     }
 }
 
-fn place_parts(place: &timeline_core::pipeline::places::ResolvedPlace) -> (PlaceOrigin, Option<i64>) {
+fn place_parts(
+    place: &timeline_core::pipeline::places::ResolvedPlace,
+) -> (PlaceOrigin, Option<i64>) {
     match place.source {
         PlaceSource::UserPlace { id } => (PlaceOrigin::UserPlace, Some(id)),
         PlaceSource::GeoPlace { id } => (PlaceOrigin::GeoPlace, Some(id)),
@@ -737,7 +737,7 @@ pub fn compute_stats(request: PipelineRequest, cell_size_deg: f64) -> StatsOutpu
 ///
 /// Volontairement une clé et non un libellé : le cœur ne produit **jamais** de
 /// texte destiné à l'utilisateur, c'est l'UI qui traduit.
-fn mode_key(mode: CoreTravelMode) -> &'static str {
+pub(crate) fn mode_key(mode: CoreTravelMode) -> &'static str {
     match mode {
         CoreTravelMode::Walking => "walking",
         CoreTravelMode::Running => "running",

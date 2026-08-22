@@ -1,17 +1,13 @@
 {
   "@@locale": "fr",
-
   "appTitle": "Odysseia",
-
   "navStory": "Récit",
   "navStats": "Stats",
   "navVideo": "Vidéo",
-
   "granularityDay": "Jour",
   "granularityWeek": "Semaine",
   "granularityMonth": "Mois",
   "granularityYear": "Année",
-
   "storyEmpty": "Rien d'enregistré sur cette période",
   "storyEmptyHint": "Essayez une autre période, ou importez un export Timeline.",
   "storyVisitAt": "Arrêt à {place}",
@@ -20,7 +16,6 @@
   "storyCorrectedBadge": "corrigé",
   "storyWeatherUnavailable": "Météo désactivée",
   "storyPhotosUnavailable": "Photos désactivées",
-
   "modeWalking": "À pied",
   "modeRunning": "En courant",
   "modeCycling": "À vélo",
@@ -31,7 +26,6 @@
   "modeMotorcycling": "À moto",
   "modeFlight": "En avion",
   "modeUnknown": "Inconnu",
-
   "weekdayMonday": "lun",
   "weekdayTuesday": "mar",
   "weekdayWednesday": "mer",
@@ -39,7 +33,6 @@
   "weekdayFriday": "ven",
   "weekdaySaturday": "sam",
   "weekdaySunday": "dim",
-
   "statsTitle": "Stats & patterns",
   "statsDensity": "Heatmap de densité",
   "statsTopPlaces": "Lieux les plus visités",
@@ -48,18 +41,15 @@
   "statsWeekday": "Patterns par jour de semaine",
   "statsTotalDistance": "Distance totale",
   "statsModeBreakdown": "Par mode de transport",
-
   "statsEmpty": "Aucune donnée pour ces filtres",
   "statsVisitCount": "{count, plural, =0{Aucun arrêt} =1{1 arrêt} other{{count} arrêts}}",
   "statsSegmentCount": "{count, plural, =0{Aucun trajet} =1{1 trajet} other{{count} trajets}}",
-
   "filtersTitle": "Filtres",
   "filtersPeriod": "Période",
   "filtersPlace": "Lieu",
   "filtersMode": "Mode de transport",
   "filtersAll": "Tous",
   "filtersClear": "Effacer les filtres",
-
   "videoTitle": "Vidéo souvenir",
   "videoDuration": "Durée",
   "videoDurationSeconds": "{seconds} s",
@@ -75,15 +65,50 @@
   "videoFrameCount": "{count} images",
   "videoWebSlowWarning": "Le rendu dans le navigateur est nettement plus lent que sur l'appareil. Vous pouvez continuer à utiliser l'app pendant ce temps.",
   "videoEncoderUnavailable": "L'export vidéo n'est pas encore branché — aperçu seulement.",
-
   "progressStep": "Étape {step}",
   "progressPercent": "{percent} %",
-
   "errorEmptyExport": "Cet export ne contient aucune donnée.",
   "errorCorruptJson": "Ce fichier n'est pas du JSON valide et n'a pas pu être lu.",
   "errorUnrecognisedFormat": "Ce format d'export n'est pas reconnu. Il vient peut-être d'une version plus récente de Google Timeline.",
   "errorFileTooLarge": "Ce fichier est trop volumineux pour être traité sur cet appareil.",
   "errorIo": "Le fichier n'a pas pu être lu.",
-
-  "privateZoneHidden": "Certaines données sont masquées par vos zones privées"
+  "privateZoneHidden": "Certaines données sont masquées par vos zones privées",
+  "importTitle": "Import",
+  "importIntro": "Importez votre export Google Timeline. Tout est traité sur cet appareil — rien n'est envoyé nulle part (§2).",
+  "importChoose": "Choisir un fichier",
+  "importPickerUnavailable": "Le sélecteur de fichier n'est pas branché sur cette plateforme. L'import fonctionne — il lui faut juste un chemin.",
+  "importReplaceWarning": "Un nouvel import remplace le jeu de données actuel. Vos lieux nommés, zones privées et corrections sont conservés.",
+  "importRunning": "Import en cours…",
+  "importStepDetecting": "Détection du format",
+  "importStepReading": "Lecture des enregistrements",
+  "importStepDone": "Finalisation",
+  "importRecords": "{count} enregistrements",
+  "importSucceeded": "Import terminé",
+  "importCounts": "{visits} arrêts · {segments} trajets · {points} points",
+  "importSkipped": "{count, plural, =0{} =1{1 enregistrement illisible a été ignoré} other{{count} enregistrements illisibles ont été ignorés}}",
+  "importShorterWarning": "Cet export couvre une période plus courte que le précédent. Il lui manque peut-être de l'historique ancien.",
+  "settingsTitle": "Réglages",
+  "settingsCapabilities": "Plateforme",
+  "settingsIntegrations": "Intégrations optionnelles",
+  "settingsIntegrationsIntro": "Toutes désactivées par défaut. Chacune transmet des données dérivées de la Timeline à un tiers — le détail est indiqué ci-dessous.",
+  "settingsMapTiles": "Tuiles de carte (OpenStreetMap)",
+  "settingsMapTilesDetail": "Transmet uniquement les zones de carte affichées. Jamais de donnée Timeline.",
+  "settingsImmich": "Serveur photo Immich",
+  "settingsImmichDetail": "Transmet des dates et coordonnées dérivées de votre Timeline au serveur que vous configurez.",
+  "settingsWeather": "Météo historique",
+  "settingsWeatherDetail": "Transmet des coordonnées arrondies à 2 décimales (~1,1 km) et une date à une API météo tierce.",
+  "settingsMyData": "Mes données",
+  "settingsExport": "Tout exporter",
+  "settingsDelete": "Supprimer toutes les données locales",
+  "settingsDeleteConfirm": "Ceci supprime définitivement vos données importées, vos lieux nommés, vos zones privées et vos corrections. C'est irréversible.",
+  "settingsDeleteDone": "Toutes les données locales ont été supprimées",
+  "commonCancel": "Annuler",
+  "commonConfirm": "Confirmer",
+  "commonClose": "Fermer",
+  "capabilityDatabase": "Base locale",
+  "capabilityBridge": "Moteur de calcul",
+  "capabilityVideoExport": "Export vidéo",
+  "capabilityAvailable": "Disponible",
+  "capabilityUnavailable": "Indisponible sur cette plateforme",
+  "capabilityNotWired": "Pas encore branché"
 }
