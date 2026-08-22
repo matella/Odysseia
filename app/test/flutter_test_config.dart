@@ -3,10 +3,10 @@
 //
 // # Pourquoi une comparaison tolérante
 //
-// Les images de référence (§3.10) sont générées sur la machine du
-// développeur et rejouées en CI, sur Linux. Le rendu du texte et
-// l'anticrénelage varient légèrement d'une plateforme et d'une version de
-// moteur à l'autre : une comparaison au pixel près échouerait sur des écarts
+// Les images de référence (§3.10) sont produites et comparées sous Linux, en
+// CI — voir `test/golden/golden_harness.dart`. L'écart entre systèmes est donc
+// hors sujet ici ; ce qui reste, c'est la dérive d'une version de moteur
+// Flutter à l'autre. Une comparaison au pixel près échouerait sur des écarts
 // invisibles, et l'équipe prendrait vite l'habitude de régénérer les goldens
 // sans les regarder — ce qui les viderait de leur sens.
 //

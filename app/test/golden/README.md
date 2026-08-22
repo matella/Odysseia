@@ -15,23 +15,35 @@ immédiatement montré « Semaine » passant sur deux lignes dans le sélecteur 
 granularité — un défaut invisible sur l'image anglaise. C'est exactement ce
 qu'un golden par locale sert à attraper.
 
+## Linux est la plateforme de référence
+
+Les images sont produites **en CI, sous Linux**, et comparées seulement là.
+Ailleurs — typiquement sous Windows — ces tests sont **sautés**, visiblement.
+
+Ce n'est pas un choix de confort : une image produite sous Windows et rejouée
+sous Linux diffère de 1 à 1,7 % des pixels, mesuré. Élargir la tolérance
+jusqu'à absorber cet écart aurait rendu les goldens aveugles à ce qu'ils sont
+censés attraper.
+
 ## Régénérer
 
 ```bash
-cd app && flutter test test/golden --update-goldens
+gh workflow run CI -f update_goldens=true
 ```
 
-Regarder les images avant de les commiter : un golden régénéré sans être lu ne
-vaut rien.
+Puis récupérer l'artefact `goldens` et remplacer `images/`. Regarder les
+images avant de les commiter : un golden régénéré sans être lu ne vaut rien.
+
+En cas d'échec en CI, l'artefact `golden-failures` contient les trois images
+attendue / obtenue / différence.
 
 ## Tolérance
 
 La comparaison accepte 0,5 % de pixels différents
-(`test/flutter_test_config.dart`). Les images sont produites sur la machine du
-développeur et rejouées en CI sous Linux, où l'anticrénelage diffère
-légèrement. Le seuil absorbe ce bruit ; un décalage de mise en page, un texte
-qui déborde ou une traduction manquante en changent bien davantage et font
-toujours échouer le test.
+(`test/flutter_test_config.dart`). Ce seuil ne sert plus à absorber un écart
+entre OS — il n'y en a plus — mais la dérive d'une version de moteur Flutter à
+l'autre. Un décalage de mise en page, un texte qui déborde ou une traduction
+manquante changent bien davantage et font toujours échouer le test.
 
 ## Pas de pont ici
 

@@ -9,6 +9,14 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      update_goldens:
+        description: >-
+          Régénérer les images de référence des golden tests et les publier en
+          artefact. Linux est la plateforme de référence (§3.10) : les images
+          se régénèrent ici, pas sur la machine du développeur.
+        type: boolean
+        default: false
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -106,11 +114,33 @@ jobs:
         working-directory: app
         run: flutter analyze
 
-      # Unitaires + golden (§3.10). Les images de référence sont comparées
-      # avec une tolérance d'anticrénelage — voir `test/flutter_test_config.dart`.
+      # Unitaires + golden (§3.10). Les images de référence sont produites
+      # sous Linux : c'est la plateforme de référence, seule à les comparer.
       - name: flutter test
+        if: ${{ !inputs.update_goldens }}
         working-directory: app
         run: flutter test
+
+      - name: Régénérer les images de référence
+        if: ${{ inputs.update_goldens }}
+        working-directory: app
+        run: flutter test test/golden --update-goldens
+
+      - name: Publier les images régénérées
+        if: ${{ inputs.update_goldens }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: goldens
+          path: app/test/golden/images/
+
+      # En cas d'échec, les images attendue/obtenue/diff valent mille mots.
+      - name: Publier les écarts de golden
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-failures
+          path: app/test/golden/failures/
+          if-no-files-found: ignore
 
   build:
     name: build de vérification — Android + web
