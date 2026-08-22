@@ -13,7 +13,7 @@ localement sur l'appareil — aucune donnée Timeline n'est envoyée à un serve
 | Étape | État |
 | --- | --- |
 | Arborescence §6 + CI légère | fait |
-| Parsing streaming + fixtures (§3.10) | à faire |
+| Parsing streaming + fixtures (§3.10) | fait |
 | Schéma §5 en base + pipeline §5.4 | à faire |
 | Vues Récit / Stats / Vidéo | à faire |
 

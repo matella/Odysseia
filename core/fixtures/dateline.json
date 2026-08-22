@@ -1,0 +1,27 @@
+[
+  {
+    "startTime": "2024-06-01T11:30:00.000+12:00",
+    "endTime": "2024-06-01T12:10:00.000+12:00",
+    "visit": {
+      "topCandidate": { "placeLocation": { "latLng": "-16.5004°, 179.9999°" } }
+    }
+  },
+  {
+    "startTime": "2024-06-01T12:10:00.000+12:00",
+    "endTime": "2024-06-01T13:40:00.000-11:00",
+    "activity": {
+      "start": { "latLng": "-16.5004°, 179.9500°" },
+      "end": { "latLng": "-14.2710°, -170.1322°" },
+      "distanceMeters": "1120400",
+      "topCandidate": { "type": "flying", "probability": 0.97 }
+    }
+  },
+  {
+    "startTime": "2024-06-01T14:00:00.000-11:00",
+    "endTime": "2024-06-01T14:02:00.000-11:00",
+    "timelinePath": [
+      { "point": "geo:-90.0,-180.0", "durationMinutesOffsetFromStartTime": "0" },
+      { "point": "geo:90.0,180.0", "durationMinutesOffsetFromStartTime": "1" }
+    ]
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "startTime": "2024-02-10T09:00:00.000Z",
+    "endTime": "2024-02-10T09:30:00.000Z",
+    "visit": { "topCandidate": { "placeLocation": { "latLng": "48.8584°, 2.2945°" } } }
+  },
+  {
+    "startTime": "2024-02-10T10:00:00.000Z",
+    "endTime": "2024-02-10T10:30:00.000Z",
+    "visit": { "topCandidate": { "placeLocation": { "latLng": "91.5°, 2.2945°" } } }
+  },
+  {
+    "startTime": "hier matin",
+    "endTime": "2024-02-10T11:30:00.000Z",
+    "visit": { "topCandidate": { "placeLocation": { "latLng": "48.8584°, 2.2945°" } } }
+  },
+  {
+    "startTime": "2024-02-10T12:00:00.000Z",
+    "endTime": "2024-02-10T12:30:00.000Z",
+    "somethingElse": { "opaque": true }
+  },
+  {
+    "startTime": "2024-02-10T13:00:00.000Z",
+    "endTime": "2024-02-10T13:30:00.000Z",
+    "visit": { "topCandidate": { "placeLocation": { "latLng": "45.7640°, 4.8357°" } } }
+  }
+]

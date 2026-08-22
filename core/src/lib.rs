@@ -1,6 +1,7 @@
 //! `timeline_core` — moteur de calcul d'Odysseia.
 //!
-//! Squelette : aucun module n'est encore implémenté (§7).
+//! État : [`parse`] est implémenté (formats Google, §5.1) ; les autres
+//! modules sont encore des squelettes (§7).
 //!
 //! Contraintes structurantes (voir `CLAUDE.md` et `docs/specs.md`) :
 //! - zéro réseau : ce crate ne fait **aucun** appel réseau (§2) ;

@@ -1,0 +1,12 @@
+[
+  {
+    "startTime": "2024-01-02T10:00:00.000Z",
+    "endTime": "2024-01-02T11:00:00.000Z",
+    "visit": { "topCandidate": { "placeLocation": { "latLng": "48.8584°, 2.2945°" } } }
+  },
+  {
+    "startTime": "2024-01-02T12:00:00.000Z",
+    "endTime": "2024-01-02T13:00:00.000Z",
+    "visit": { "topCandidate": { "placeLocation": { "latLng": "-33.4489°, -70.6693°" } } }
+  }
+]

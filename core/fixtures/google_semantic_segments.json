@@ -1,0 +1,34 @@
+{
+  "semanticSegments": [
+    {
+      "startTime": "2013-11-01T07:30:00.000-05:00",
+      "endTime": "2013-11-01T08:15:00.000-05:00",
+      "visit": {
+        "hierarchyLevel": 0,
+        "probability": 0.65,
+        "topCandidate": {
+          "placeId": "ChIJOwg_06VPwokRYv534QaPC8g",
+          "semanticType": "Work",
+          "probability": 0.71,
+          "placeLocation": { "latLng": "40.7484°, -73.9857°" }
+        }
+      }
+    },
+    {
+      "startTime": "2013-11-01T08:15:00.000-05:00",
+      "endTime": "2013-11-01T08:52:00.000-05:00",
+      "activity": {
+        "start": { "latLng": "40.7484°, -73.9857°" },
+        "end": { "latLng": "40.7061°, -73.9969°" },
+        "distanceMeters": "5120",
+        "topCandidate": { "type": "IN_PASSENGER_VEHICLE", "probability": 0.83 }
+      }
+    }
+  ],
+  "rawSignals": [],
+  "userLocationProfile": {
+    "frequentPlaces": [
+      { "placeId": "ChIJOwg_06VPwokRYv534QaPC8g", "placeLocation": "geo:40.7484,-73.9857", "label": "WORK" }
+    ]
+  }
+}

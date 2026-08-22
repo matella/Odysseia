@@ -1,0 +1,35 @@
+[
+  {
+    "startTime": "2024-03-15T08:12:00.000+01:00",
+    "endTime": "2024-03-15T09:05:00.000+01:00",
+    "visit": {
+      "hierarchyLevel": 0,
+      "probability": 0.87,
+      "topCandidate": {
+        "placeId": "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+        "semanticType": "Home",
+        "probability": 0.94,
+        "placeLocation": { "latLng": "48.8584°, 2.2945°" }
+      }
+    }
+  },
+  {
+    "startTime": "2024-03-15T09:05:00.000+01:00",
+    "endTime": "2024-03-15T09:41:00.000+01:00",
+    "activity": {
+      "start": { "latLng": "48.8584°, 2.2945°" },
+      "end": { "latLng": "48.8606°, 2.3376°" },
+      "distanceMeters": "3210.5",
+      "topCandidate": { "type": "walking", "probability": 0.78 }
+    }
+  },
+  {
+    "startTime": "2024-03-15T10:00:00.000+01:00",
+    "endTime": "2024-03-15T10:04:00.000+01:00",
+    "timelinePath": [
+      { "point": "geo:48.8606,2.3376", "durationMinutesOffsetFromStartTime": "0" },
+      { "point": "geo:48.8620,2.3390", "durationMinutesOffsetFromStartTime": "2" },
+      { "point": "geo:48.8635,2.3402", "durationMinutesOffsetFromStartTime": "4" }
+    ]
+  }
+]
