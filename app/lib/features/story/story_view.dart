@@ -30,8 +30,8 @@ enum StoryGranularity {
 
 /// Une entrée du récit : un arrêt ou un trajet, replacés dans l'ordre.
 class _Entry implements Comparable<_Entry> {
-  _Entry.visit(this.visit) : segment = null, at = visit!.arrivalTsUtc;
-  _Entry.segment(this.segment) : visit = null, at = segment!.startTsUtc;
+  _Entry.visit(this.visit) : segment = null, at = visit!.arrivalTsUtc.toInt();
+  _Entry.segment(this.segment) : visit = null, at = segment!.startTsUtc.toInt();
 
   final ResolvedVisitOutput? visit;
   final ResolvedSegmentOutput? segment;
@@ -193,11 +193,11 @@ class _VisitTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final duration = visit.departureTsUtc - visit.arrivalTsUtc;
+    final duration = (visit.departureTsUtc - visit.arrivalTsUtc).toInt();
 
     return _Tile(
       icon: Icons.place_outlined,
-      time: localTimeOfDay(visit.arrivalTsUtc, visit.arrivalTzOffsetMinutes),
+      time: localTimeOfDay(visit.arrivalTsUtc.toInt(), visit.arrivalTzOffsetMinutes),
       title: l10n.storyVisitAt(placeLabelOr(l10n, visit.placeLabel)),
       details: [
         formatDuration(duration),
@@ -218,11 +218,11 @@ class _SegmentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final duration = segment.endTsUtc - segment.startTsUtc;
+    final duration = (segment.endTsUtc - segment.startTsUtc).toInt();
 
     return _Tile(
       icon: Icons.trending_flat,
-      time: localTimeOfDay(segment.startTsUtc, segment.startTzOffsetMinutes),
+      time: localTimeOfDay(segment.startTsUtc.toInt(), segment.startTzOffsetMinutes),
       title: l10n.storyTripFromTo(
         placeLabelOr(l10n, segment.startPlaceLabel),
         placeLabelOr(l10n, segment.endPlaceLabel),

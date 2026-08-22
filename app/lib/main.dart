@@ -4,13 +4,12 @@
 // **aucune** logique métier. Parsing, clustering, stats et génération de
 // frames vivent dans `core/`. Le Dart orchestre l'UI, la base et le pont.
 
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'bridge/generated/frb_generated.dart';
+import 'data/connection/connection.dart';
 import 'data/database.dart';
 import 'data/timeline_repository.dart';
 import 'features/stats/stats_view.dart';
@@ -20,17 +19,28 @@ import 'l10n/generated/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await RustLib.init();
 
-  // TODO(import): base en mémoire tant que l'import (§3.3 de docs/specs.md,
-  // étape 2 de §7) n'existe pas — il n'y a encore rien à persister. Le passage
-  // à un fichier local se fera avec l'écran d'import, qui doit aussi archiver
-  // le Timeline.json source (§3.2).
-  final database = OdysseiaDatabase(
-    DatabaseConnection(NativeDatabase.memory()),
-  );
+  final repository = await _initialise();
+  runApp(OdysseiaApp(repository: repository));
+}
 
-  runApp(OdysseiaApp(repository: TimelineRepository(database)));
+/// Prépare le pont et la base, ou renonce proprement.
+///
+/// En web, ni le pont (build WASM, §6.2) ni la base (`sqlite3.wasm`, §3.2) ne
+/// sont branchés. L'app démarre quand même et affiche des vues vides : §3.10
+/// interdit le crash visible, et une plateforme dégradée se **signale**, elle
+/// ne se déguise pas (§2).
+Future<TimelineRepository?> _initialise() async {
+  final connection = openConnection();
+  if (connection == null) return null;
+
+  try {
+    await RustLib.init();
+  } on Object {
+    return null;
+  }
+
+  return TimelineRepository(OdysseiaDatabase(connection));
 }
 
 /// Racine de l'application.
@@ -106,8 +116,8 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   Widget _body() {
-    // Sans dépôt — tests de widgets, ou app pas encore initialisée — les vues
-    // s'affichent vides plutôt que de planter (§3.10).
+    // Sans dépôt — tests de widgets, plateforme web, ou app pas encore
+    // initialisée — les vues s'affichent vides plutôt que de planter (§3.10).
     return switch (_tab) {
       0 => StoryView(
         visits: const [],

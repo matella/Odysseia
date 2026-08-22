@@ -78,7 +78,7 @@ class StatsView extends StatelessWidget {
             title: l10n.statsTimePerPlace,
             child: _BucketList(
               buckets: stats.places,
-              valueOf: (bucket) => formatDuration(bucket.durationMs),
+              valueOf: (bucket) => formatDuration(bucket.durationMs.toInt()),
             ),
           ),
           _Section(

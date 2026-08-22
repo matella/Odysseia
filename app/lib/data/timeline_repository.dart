@@ -9,12 +9,18 @@
 // `RawPoint` de la base. Une vue qui voudrait contourner les zones privées
 // devrait modifier ce fichier — ce qui se voit en revue.
 
-import 'dart:typed_data';
-
 import 'package:drift/drift.dart';
+import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 import '../bridge/generated/api/timeline.dart';
 import 'database.dart';
+
+/// Convertit un entier Dart vers l'entier 64 bits du pont.
+///
+/// Nécessaire parce que JavaScript n'a pas d'entier 64 bits : `PlatformInt64`
+/// vaut `int` en natif et `BigInt` en web. Passer par ce helper est ce qui
+/// permet au même code de compiler pour les deux cibles (§3.8).
+PlatformInt64 _i64(int value) => PlatformInt64Util.from(value);
 
 /// Fenêtre temporelle demandée par une vue.
 class Period {
@@ -105,7 +111,7 @@ class TimelineRepository {
       points: [
         for (final row in points)
           PointInput(
-            timestampUtc: row.timestampUtc,
+            timestampUtc: _i64(row.timestampUtc),
             tzOffsetMinutes: row.tzOffsetMinutes,
             lat: row.lat,
             lon: row.lon,
@@ -114,10 +120,10 @@ class TimelineRepository {
       visits: [
         for (final row in visits)
           VisitInput(
-            id: row.id,
-            arrivalTsUtc: row.arrivalTsUtc,
+            id: _i64(row.id),
+            arrivalTsUtc: _i64(row.arrivalTsUtc),
             arrivalTzOffsetMinutes: row.arrivalTzOffsetMinutes,
-            departureTsUtc: row.departureTsUtc,
+            departureTsUtc: _i64(row.departureTsUtc),
             departureTzOffsetMinutes: row.departureTzOffsetMinutes,
             lat: row.lat,
             lon: row.lon,
@@ -126,10 +132,10 @@ class TimelineRepository {
       segments: [
         for (final row in segments)
           SegmentInput(
-            id: row.id,
-            startTsUtc: row.startTsUtc,
+            id: _i64(row.id),
+            startTsUtc: _i64(row.startTsUtc),
             startTzOffsetMinutes: row.startTzOffsetMinutes,
-            endTsUtc: row.endTsUtc,
+            endTsUtc: _i64(row.endTsUtc),
             endTzOffsetMinutes: row.endTzOffsetMinutes,
             startLat: row.startLat,
             startLon: row.startLon,
@@ -142,7 +148,7 @@ class TimelineRepository {
       userPlaces: [
         for (final row in userPlaces)
           UserPlaceInput(
-            id: row.id,
+            id: _i64(row.id),
             label: row.label,
             lat: row.lat,
             lon: row.lon,
@@ -152,7 +158,7 @@ class TimelineRepository {
       privateZones: [
         for (final row in privateZones)
           PrivateZoneInput(
-            id: row.id,
+            id: _i64(row.id),
             label: row.label,
             lat: row.lat,
             lon: row.lon,
@@ -163,14 +169,14 @@ class TimelineRepository {
       overrides: [
         for (final row in overrides)
           OverrideInput(
-            id: row.id,
+            id: _i64(row.id),
             localDate: row.localDate,
             startLatR: row.startLatR,
             startLonR: row.startLonR,
             endLatR: row.endLatR,
             endLonR: row.endLonR,
             correctedMode: travelModeFromKey(row.correctedMode),
-            sourceStartTsUtc: row.sourceStartTsUtc,
+            sourceStartTsUtc: _i64(row.sourceStartTsUtc),
           ),
       ],
       filters: filters ?? const FiltersInput(modes: []),
