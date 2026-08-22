@@ -73,6 +73,13 @@ Both halves matter. Regenerating the Dart without rebuilding the native
 library leaves the two sides speaking different protocols, and the failure
 surfaces as an opaque codec assertion, not as a type error.
 
+**Every `i64` crossing the bridge needs conversion in Dart.** JavaScript has no
+64-bit integer, so frb maps `i64` to `PlatformInt64` — `int` natively, `BigInt`
+on web. Pass values in with `PlatformInt64Util.from(...)` and read them out
+with `.toInt()`. Native builds and `flutter test` accept a bare `int` happily;
+**only `flutter build web` catches the mistake**, so run it before pushing
+anything that touches the bridge boundary.
+
 The frb-annotated API lives in `bridge/`, never in `core/` — that is what
 keeps the core free of Dart concerns.
 

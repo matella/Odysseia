@@ -7,7 +7,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart'
-    show Int64List;
+    show Int64List, PlatformInt64Util;
 
 import '../bridge/generated/api/timeline.dart';
 import '../data/import_service.dart';
@@ -89,8 +89,10 @@ class _HomeShellState extends State<HomeShell> {
         _period.bounds,
         VideoParams(
           durationS: _videoSettings.durationS,
-          periodStartUtc: _period.bounds.startUtc,
-          periodEndUtc: _period.bounds.endUtc,
+          // JS n'a pas d'entier 64 bits : le pont attend un `PlatformInt64`,
+          // qui vaut `int` en natif et `BigInt` en web (§3.8).
+          periodStartUtc: PlatformInt64Util.from(_period.bounds.startUtc),
+          periodEndUtc: PlatformInt64Util.from(_period.bounds.endUtc),
           style: _videoSettings.style,
           title: _videoSettings.title,
         ),
